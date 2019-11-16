@@ -1,119 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/host"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    //지역, 설정버튼
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="대충 지역 적히는 곳"/>
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/setting_icon"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitEnd"
+            android:adjustViewBounds="true"
+            android:clickable="true"/>
+    </RelativeLayout>
 
+    //탭 버튼
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        //지역, 설정버튼
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:text="대충 지역 적히는 곳"/>
-            <ImageView
-                android:id="@+id/setting"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/setting_icon"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="fitEnd"
-                android:adjustViewBounds="true"
-                android:clickable="true"/>
-        </RelativeLayout>
-
-        //탭 버튼
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1">
-        </TabWidget>
-
-        //오염도 게이지 바
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="0.5">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="오염도 게이지바 들어가는 곳.이미지 뷰로 바꾸기"/>
-        </LinearLayout>
-
-        //지도
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7">
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:src="@drawable/map_korea"/>
-                <ImageView
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:src="@drawable/map_korea"/>
-                <ImageView
-                    android:id="@+id/tab3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:src="@drawable/map_korea"/>
-                <ImageView
-                    android:id="@+id/tab4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:src="@drawable/map_korea"/>
-                <ImageView
-                    android:id="@+id/tab5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:src="@drawable/map_korea"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/border"
-                android:layout_margin="10dp">
-                <Spinner
-                    android:id="@+id/location_select"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/cityName"/>
-            </LinearLayout>
-
-        </RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tab1_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="미세먼지"
+            android:clickable="true"/>
+        <TextView
+            android:id="@+id/tab2_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="초미세먼지"
+            android:clickable="true" />
+        <TextView
+            android:id="@+id/tab3_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="황사"
+            android:clickable="true"/>
+        <TextView
+            android:id="@+id/tab4_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="자외선"
+            android:clickable="true"/>
+        <TextView
+            android:id="@+id/tab5_indicator"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="오존"
+            android:clickable="true"/>
     </LinearLayout>
-</TabHost>
+
+    //대기환경지수 이미지
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+        <ImageView
+            android:id="@+id/atmosphere_environment_standard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/standard_fin_dust"
+            android:background="@drawable/border"/>
+
+    </LinearLayout>
+
+    //지도
+    <RelativeLayout
+        android:id="@+id/tab_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"/>
+
+        //Spinner
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/border"
+            android:layout_margin="10dp">
+            <Spinner
+                android:id="@+id/location_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/cityName"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
