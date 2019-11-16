@@ -16,6 +16,7 @@
             android:orientation="horizontal"
             android:layout_weight="1">
             <TextView
+                android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -23,6 +24,7 @@
                 android:padding="10dp"
                 android:text="대충 지역 적히는 곳"/>
             <ImageView
+                android:id="@+id/setting"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -58,52 +60,60 @@
         </LinearLayout>
 
         //지도
-        <FrameLayout
-            android:id="@android:id/tabcontent"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7">
-
-            <RelativeLayout
+            <FrameLayout
+                android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
-                    android:id="@+id/tab_content1"
+                    android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAlignment="center"
                     android:src="@drawable/map_korea"/>
-            </RelativeLayout>
+                <ImageView
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:src="@drawable/map_korea"/>
+                <ImageView
+                    android:id="@+id/tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:src="@drawable/map_korea"/>
+                <ImageView
+                    android:id="@+id/tab4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:src="@drawable/map_korea"/>
+                <ImageView
+                    android:id="@+id/tab5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:src="@drawable/map_korea"/>
+            </FrameLayout>
 
-            <ImageView
-                android:id="@+id/tab_content2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:src="@drawable/map_korea"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/border"
+                android:layout_margin="10dp">
+                <Spinner
+                    android:id="@+id/location_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/cityName"/>
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/tab_content3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:src="@drawable/map_korea"/>
-
-            <ImageView
-                android:id="@+id/tab_content4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:src="@drawable/map_korea"/>
-
-            <ImageView
-                android:id="@+id/tab_content5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:src="@drawable/map_korea"/>
-
-
-        </FrameLayout>
+        </RelativeLayout>
     </LinearLayout>
 </TabHost>
