@@ -1,185 +1,135 @@
 package com.example.weatherapplication;
 
-import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
-import android.app.Service;
-import android.os.Handler;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
-
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+public class WeatherUrlParser {
 
-public class WeatherUrlParser extends Service implements Runnable {
+    URL url;
+    public ArrayList<Object> temp;
+    public ArrayList<String> wfKor;
+    public ArrayList<String> pty;
+    public ArrayList<Object> r12;
+    public ArrayList<String> wdKor;
 
+    public int x;
+    public int y;
 
-    private final IBinder mBinder = new ServiceBinder();
-    public static String WEATHER_URL = "http://www.kma.go.kr/wid/queryDFS.jsp?";
+    String data;
 
-    private Handler mHandler;
-    private boolean mRunning = true;
-    private long DELAY_TIME = 30 * 60 * 1000;
-    public static boolean first = true;
+    public int datacnt;
 
-    public class UrlParser extends DefaultHandler{
+    public WeatherUrlParser(double x,double y) {
+        temp = new ArrayList<Object>();
+        wfKor = new ArrayList<String>();
+        pty = new ArrayList<String>();
+        r12 = new ArrayList<Object>();
+        wdKor = new ArrayList<String>();
+        datacnt = 0;
+        settingGrid(x,y);
+        String urlstr = "https://www.kma.go.kr/wid/queryDFS.jsp?gridx="+(int)x+"&gridy="+(int)y;
+        System.out.println(urlstr);
+        try {
+            url = new URL(urlstr);
+            parsing();
 
-        private int COUNT_OF_TIME = 7;
-
-        private String DATA_ELEMENT = "data seq=";
-        private String CLOSE_DATA_ELEMENT = "data";
-        private String BODY_ELEMENT = "body";
-        private String TIME_ELEMENT = "hour";
-        private String TEMP_ELEMENT = "temp";
-        private String WFEN_ELEMENT = "wfEn";
-        private String element;
-        boolean inBody=false;
-        private int seq_count = 0;
-
-        private StringBuffer resourceIdBuffer;
-        private StringBuffer timeBuffer;
-        private StringBuffer tempBuffer;
-        private String[] temp=new String[COUNT_OF_TIME];
-        private String[] times=new String[COUNT_OF_TIME];
-        private String[] resourceIds=new String[COUNT_OF_TIME];
-
-        public static final String INFORMATION_RECIEVER = "org.techtown.weatherapplication";
-        public static final String RESOURCE_IDS = "resource_ids";
-        public static final String TIME = "time";
-        public static final String TEMPERATURE = "temp";
-
-        @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes)throws SAXException {
-            element = localName;
-            if(localName.equals(DATA_ELEMENT+"\""+seq_count+"\"")) {
-                resourceIdBuffer = new StringBuffer();
-                timeBuffer = new StringBuffer();
-            }else if(localName.equals(BODY_ELEMENT)){
-                inBody=true;
-            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+    }
+    public void settingGrid(double x,double y)
+    {
+        this.x= (int)Math.round(x);
+        this.y=(int)Math.round(y);
+    }
+    public void parsing() {
+        String TagName="";
+        String dataText="";
+        boolean inTitle = false;
+        boolean inBody = false;
+        XmlPullParserFactory parserCreator=null;
+        XmlPullParser parser=null;
+        InputStream is=null;
 
-        @Override
-        public void characters(char[] ch,int start, int length) throws SAXException
-        {
-            if(!inBody) {
-                return;
-            }
-            if(element.equals(TIME_ELEMENT)){
-                timeBuffer.append(ch,start,length);
-            }else if(element.equals(TEMP_ELEMENT)){
-                tempBuffer.append(ch,start,length);
-            }else if(element.equals(WFEN_ELEMENT)) {
-                resourceIdBuffer.append(ch,start,length);
-            }
-        }
+        try {
+            parserCreator = XmlPullParserFactory.newInstance();
+            parser = parserCreator.newPullParser();
+            is = url.openStream();
+            parser.setInput(is,null);
+            int parserEvent = parser.getEventType();
 
-        @Override
-        public void endElement(String uri,String localName,String qName)throws SAXException{
-            if(localName.equals(CLOSE_DATA_ELEMENT)){
-                if(seq_count==COUNT_OF_TIME){
-                    inBody=false;
+            while (parserEvent != XmlPullParser.END_DOCUMENT) {
+                switch (parserEvent) {
+                    case XmlPullParser.START_TAG:{
+                        if (parser.getName().equals("body")) {
+                            inBody = true;
+                        }
+                        else if(inBody)
+                            TagName = parser.getName();
+                    }break;
+                    case XmlPullParser.TEXT:{
+                        if (inBody) {
+                            if(TagName.equals("temp"))
+                            {
+                                dataText = parser.getText();
+                                if(dataText!="")
+                                    temp.add(Double.parseDouble(dataText));
+                            }
+                            else if(TagName.equals("wfKor"))
+                            {
+                                dataText = parser.getText();
+                                if(dataText!="")
+                                    wfKor.add(dataText);
+                            }
+                            else if(TagName.equals("pty"))
+                            {
+                                dataText = parser.getText();
+                                if(dataText=="")
+                                    dataText="0";
+                                switch(Integer.parseInt(dataText)){
+                                    case 0 : pty.add("NULL");break;
+                                    case 1 : pty.add("비");break;
+                                    case 2 : pty.add("비/눈");break;
+                                    case 3 : pty.add("눈/비");break;
+                                    case 4 : pty.add("눈");break;
+                                }
+                            }
+                            else if(TagName.equals("r12"))
+                            {
+                                dataText = parser.getText();
+                                if(dataText!="")
+                                    r12.add(Double.parseDouble(dataText));
+                            }
+                            else if(TagName.equals("wdKor"))
+                            {
+                                dataText = parser.getText();
+                                if(dataText!="")
+                                    wdKor.add(dataText);
+                            }
+                        }
+                    }break;
+                    case XmlPullParser.END_TAG:{
+                        TagName="";
+
+                        if (parser.getName().equals("body")) {
+                            if (inBody)
+                                inBody = false;
+                        }
+                        else if(parser.getName().equals("data"))
+                            datacnt++;
+                    }break;
+                    default:break;
                 }
-                else{
-                    resourceIds[seq_count]=resourceIdBuffer.toString().trim();
-                    temp[seq_count]=tempBuffer.toString().trim();
-                    times[seq_count]=timeBuffer.toString().trim();
-                    seq_count++;
-                    resourceIdBuffer=null;
-                    tempBuffer=null;
-                    timeBuffer=null;
+                parserEvent = parser.next();
 
-                }
-            }else if(localName.equals(BODY_ELEMENT)){
-                Intent intent = new Intent(INFORMATION_RECIEVER);
-                intent.putExtra(RESOURCE_IDS,resourceIds);
-                intent.putExtra(TIME,times);
-                intent.putExtra(TEMPERATURE,temp);
-                sendBroadcast(intent);
-                inBody=false;
             }
-        }
-
-    }
-
-    public class ServiceBinder extends Binder {
-
-        WeatherUrlParser getService(){
-            return WeatherUrlParser.this;
-        }
-    }
-
-    @Override
-    public IBinder onBind(Intent intent){
-
-        return mBinder;
-    }
-
-    @Override
-    public void onCreate(){
-        mHandler = new Handler();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if(!mRunning){
-            if(first){
-                mHandler.postDelayed(this,100);
-                first = false;
-            }else{
-                mHandler.postDelayed(this,DELAY_TIME);
-            }
-            mRunning =true;
-        }
-        else{
-            if(first){
-                mHandler.postDelayed(this,100);
-                first = false;
-            }
-        }
-        return START_NOT_STICKY;
-
-    }
-
-    @Override
-    public void onDestroy() {
-        mRunning = false;
-
-    }
-
-    public void run(){
-        if (mRunning) {
-            urlParser();
-            if(first){
-                mHandler.postDelayed(this,100);
-            }else{
-                mHandler.postDelayed(this,DELAY_TIME);
-            }
-        }
-    }
-    private void urlParser(){
-        try{
-            URL url = new URL(WEATHER_URL);
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-            XMLReader reader = parser.getXMLReader();
-            UrlParser urlParser = new UrlParser();
-            reader.setContentHandler(urlParser);
-            reader.parse(new InputSource(url.openStream()));
-
         }catch(Exception e){
-
+            e.printStackTrace();
         }
-    }
-
-    public static void SettingUrl(int gridx,int gridy){
-        WEATHER_URL = WEATHER_URL +"&gridx=" + gridx + "&gridy="+gridy;
-
     }
 }

@@ -3,27 +3,14 @@ package com.example.weatherapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity {
     GpsUsing gps;
@@ -31,17 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView Lat;
     private TextView Lon;
+
+    private TextView text1,text2,text3,text4,text5;
     private Button btn;
     private double latitude;
     double longtitude;
-
-    private BroadcastReceiver receiver = new BroadcastReceiver(){
-        @Override
-        public void onReceive(Context context,Intent intent){
-            Bundle bundle = intent.getExtras();
-        }
-    };
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,14 +33,41 @@ public class MainActivity extends AppCompatActivity {
         Lat = (TextView)findViewById(R.id.textView);
         Lon = (TextView)findViewById(R.id.textView2);
 
+        text1 = (TextView)findViewById(R.id.textView3);
+        text2 = (TextView)findViewById(R.id.textView4);
+        text3 = (TextView)findViewById(R.id.textView5);
+        text4 = (TextView)findViewById(R.id.textView6);
+
+        if(!isPermission) {
+            callPermission();
+        }
+
+        gps=new GpsUsing(MainActivity.this);
+        gps.getLocation();
+        if(gps.isGetLocation()){
+
+            latitude= gps.getLatitude();
+            longtitude= gps.getLongtitude();
+
+            gridgps=new LatXLonY();
+
+            gridgps = gridgps.convertGrid(latitude,longtitude);
+
+
+            Lat.setText(String.valueOf(gridgps.x));
+            Lon.setText(String.valueOf(gridgps.y));
+
+        } else{
+            gps.showSettingsAlerts();
+        }
+
+        NetworkTask networkTask = new NetworkTask(null);
+        networkTask.execute();
+
+
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!isPermission) {
-                    callPermission();
-                    return;
-                }
-
                 gps = new GpsUsing(MainActivity.this);
                 gps.getLocation();
                 if(gps.isGetLocation()){
@@ -78,11 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     gps.showSettingsAlerts();
                 }
-
+                NetworkTask changeTask=new NetworkTask(null);
+                changeTask.execute();
             }
         });
-
-        callPermission();
     }
 
     private final int PERMISSIONS_ACCESS_FINE_LOCATION = 1000;
@@ -131,4 +138,39 @@ public class MainActivity extends AppCompatActivity {
             isPermission = true;
         }
     }
+
+    public class NetworkTask extends AsyncTask<Void,Void,String> {
+        String url;
+        WeatherUrlParser parsing;
+        NetworkTask(String url){
+            this.url = url;
+        }
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(Void... params){
+            System.out.println("X : " +gridgps.x+" Y : " + gridgps.y );
+            parsing = new WeatherUrlParser(gridgps.x,gridgps.y);
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            text1.setText(parsing.temp.get(0).toString());
+            System.out.println("1");
+            text2.setText(parsing.wfKor.get(0));
+            System.out.println("2");
+            text3.setText(parsing.pty.get(0));
+            System.out.println("3");
+            text4.setText(parsing.r12.get(0).toString());
+            System.out.println("4");
+            //text5.setText(parsing.wdKor.get(0));
+
+            System.out.println("5");
+        }
+
+
+    }
+
 }
