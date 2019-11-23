@@ -26,8 +26,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class GpsUsing implements LocationListener {
+public class GpsUsing extends Service implements LocationListener {
 
+    private final IBinder mBinder = new GpsBinder();
     private Context contextG;
 
     //GPS 사용 여부
@@ -54,6 +55,18 @@ public class GpsUsing implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000;
 
     protected LocationManager locationManager;
+
+
+    public class GpsBinder extends Binder {
+
+        GpsUsing getService(){return GpsUsing.this;}
+    }
+    @Override
+    public IBinder onBind(Intent intent){
+
+        return mBinder;
+    }
+
 
     public GpsUsing (Context context){
         this.contextG=context;
@@ -175,6 +188,17 @@ public class GpsUsing implements LocationListener {
 
     public void onProviderDisabled(String provider){
 
+    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
 }
