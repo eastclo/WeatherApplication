@@ -3,40 +3,58 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="100">
     //지역, 설정버튼
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="11">
         <TextView
-            android:id="@+id/location"
+            android:id="@+id/admin_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:text="대충 지역 적히는 곳"/>
-        <ImageView
-            android:id="@+id/setting"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:textSize="40dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sub_locality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/admin_area"
+            android:layout_alignBottom="@id/admin_area"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:textSize="30dp"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/setting_icon"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="fitEnd"
-            android:adjustViewBounds="true"
-            android:clickable="true"/>
+            android:weightSum="10"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:src="@drawable/setting_icon"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitEnd"
+                android:adjustViewBounds="true"
+                android:clickable="true"/>
+        </LinearLayout>
     </RelativeLayout>
 
     //탭 버튼
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="5"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tab1_indicator"
@@ -45,7 +63,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="미세먼지"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:background="@drawable/border"/>
         <TextView
             android:id="@+id/tab2_indicator"
             android:layout_width="0dp"
@@ -53,7 +72,8 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="초미세먼지"
-            android:clickable="true" />
+            android:clickable="true"
+            android:background="@drawable/border"/>
         <TextView
             android:id="@+id/tab3_indicator"
             android:layout_width="0dp"
@@ -61,7 +81,8 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="황사"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:background="@drawable/border"/>
         <TextView
             android:id="@+id/tab4_indicator"
             android:layout_width="0dp"
@@ -69,7 +90,8 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="자외선"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:background="@drawable/border"/>
         <TextView
             android:id="@+id/tab5_indicator"
             android:layout_width="0dp"
@@ -77,14 +99,15 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="오존"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:background="@drawable/border"/>
     </LinearLayout>
 
     //대기환경지수 이미지
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5">
+        android:layout_weight="6">
 
         <ImageView
             android:id="@+id/atmosphere_environment_standard"
@@ -100,7 +123,7 @@
         android:id="@+id/tab_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7">
+        android:layout_weight="78">
 
         <ImageView
             android:id="@+id/map"
