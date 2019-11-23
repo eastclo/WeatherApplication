@@ -11,25 +11,40 @@
         android:orientation="horizontal"
         android:layout_weight="1">
         <TextView
-            android:id="@+id/location"
+            android:id="@+id/admin_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:text="대충 지역 적히는 곳"/>
-        <ImageView
-            android:id="@+id/setting"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:textSize="40dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/sub_locality"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/setting_icon"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="fitEnd"
-            android:adjustViewBounds="true"
-            android:clickable="true"/>
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/admin_area"
+            android:layout_alignBottom="@id/admin_area"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:textSize="30dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/setting_icon"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitEnd"
+                android:adjustViewBounds="true"
+                android:clickable="true"/>
+        </LinearLayout>
     </RelativeLayout>
 
     //탭 버튼

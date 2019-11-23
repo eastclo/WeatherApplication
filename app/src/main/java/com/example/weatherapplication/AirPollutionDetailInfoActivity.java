@@ -1,16 +1,27 @@
 package com.example.weatherapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class AirPollutionDetailInfoActivity extends AppCompatActivity implements OnItemSelectedListener, OnClickListener {
 
@@ -20,11 +31,24 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     TextView indicator3;
     TextView indicator4;
     TextView indicator5;
+    TextView adminAreaView;
+    TextView subLoocalityView;
+
+    LocalBroadcastManager mLocalBroadcastManager;
+    BroadcastReceiver mReceiver;
+
+    //지역 정보 저장을 위한 변수 선언
+    String adminArea;
+    String subLocality;
+    List<Address> addresses = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_air_pollution_detail_info);
+        adminAreaView = (TextView)findViewById(R.id.admin_area);
+        subLoocalityView = (TextView)findViewById(R.id.sub_locality);
+
         indicator1 = (TextView)findViewById(R.id.tab1_indicator) ;
         indicator2 = (TextView)findViewById(R.id.tab2_indicator) ;
         indicator3 = (TextView)findViewById(R.id.tab3_indicator) ;
@@ -37,13 +61,64 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         indicator4.setOnClickListener(this);
         indicator5.setOnClickListener(this);
 
+       /*GPS 서비스 시작*/
+        Intent intent = new Intent(getApplicationContext(), GpsService.class);
+        startService(intent);
+
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                double latitude = intent.getDoubleExtra(GpsService.EXTRA_LATITUDE,0);
+                double longitude = intent.getDoubleExtra(GpsService.EXTRA_LONGITUDE,0);
+                Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
+                try {
+                    addresses = coder.getFromLocation(latitude, longitude, 3); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
+                    adminArea = addresses.get(0).getAdminArea();
+                    subLocality = addresses.get(0).getSubLocality();
+
+                    adminAreaView.setText(adminArea);
+                    subLoocalityView.setText((subLocality));
+
+                    setSpinnerSelection();   //지역 정보에 따라 spinner default 값 설정을 위한 메소드 호출
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
         spinner = (Spinner)findViewById(R.id.location_select);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cityName, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-       spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(this);
     }
+
+    private void setSpinnerSelection(){
+        String[] array = getResources().getStringArray(R.array.cityName);
+        int cnt = 0;
+
+        for (String tmp : array){
+            if(adminArea.contains(tmp)){
+                spinner.setSelection(cnt);
+                break;
+            }
+            cnt++;
+    }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mLocalBroadcastManager.registerReceiver(mReceiver, new IntentFilter(GpsService.ACTION_LOCATION_BROADCAST));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this,GpsService.class));
+    }
+
     @Override
     public void onClick(View view) {
         ImageView img = findViewById(R.id.atmosphere_environment_standard);
