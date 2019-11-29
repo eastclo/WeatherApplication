@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARS_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +14,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DataViewJeju"></activity>
+        <activity android:name=".DataViewUlsan" />
+        <activity android:name=".DataViewBusan" />
+        <activity android:name=".DataViewJeonnam" />
+        <activity android:name=".DataViewJeonbuk" />
+        <activity android:name=".DataViewGyeongbuk" />
+        <activity android:name=".DataViewDaegu" />
+        <activity android:name=".DataViewDaejeon" />
+        <activity android:name=".DataViewChungnam" />
+        <activity android:name=".DataViewChungbuk" />
+        <activity android:name=".DataViewIncheon" />
+        <activity android:name=".DataViewSeoul" />
+        <activity android:name=".DataViewGyeongnam" />
+        <activity android:name=".DataViewGyeonggi" />
+        <activity android:name=".DataViewKorea" />
+        <activity android:name=".DataViewGangwon" />
+        <activity android:name=".DataViewGwangju" />
+
         <service
             android:name=".GpsService"
             android:enabled="true"
@@ -24,7 +41,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ClothesRecommendationActivity"
+        <activity
+            android:name=".ClothesRecommendationActivity"
             android:theme="@style/MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -173,29 +173,27 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
                 img.setImageResource(R.drawable.map_seoul);
                 break;
             case 10:
-                img.setImageResource(R.drawable.map_sejong);
-                break;
-            case 11:
                 img.setImageResource(R.drawable.map_ulsan);
                 break;
-            case 12:
+            case 11:
                 img.setImageResource(R.drawable.map_incheon);
                 break;
-            case 13:
+            case 12:
                 img.setImageResource(R.drawable.map_jeollanamdo);
                 break;
-            case 14:
+            case 13:
                 img.setImageResource(R.drawable.map_jeollabukdo);
                 break;
-            case 15:
+            case 14:
                 img.setImageResource(R.drawable.map_jeju);
                 break;
-            case 16:
+            case 15:
                 img.setImageResource(R.drawable.map_chungcheongnamdo);
                 break;
-            case 17:
+            case 16:
                 img.setImageResource(R.drawable.map_chungcheongbukdo);
                 break;
+
         }
     }
     @Override
