@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:id="@+id/info_gangwon"
+    android:id="@+id/info_incheon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="gone">
 
-    //고성
+    //강화
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +14,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="46"/>    //x좌표
+            android:layout_weight="47"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -25,33 +24,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="25"/>   //y좌표
+                android:layout_weight="28"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Goseong"
+                    android:id="@+id/text_Incheon_Ganghwa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="고성"
+                    android:text="강화"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Goseong"
+                    android:id="@+id/data_Incheon_Ganghwa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Goseong"
+                    android:layout_below="@+id/text_Incheon_Ganghwa"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -59,7 +58,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //양구
+    //서구
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,7 +67,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="31"/>    //x좌표
+            android:layout_weight="65"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -78,33 +77,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="35"/>   //y좌표
+                android:layout_weight="40"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Yanggu"
+                    android:id="@+id/text_Incheon_Seo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="양구"
+                    android:text="서구"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Yanggu"
+                    android:id="@+id/data_Incheon_Seo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Yanggu"
+                    android:layout_below="@+id/text_Incheon_Seo"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -112,7 +111,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //철원
+    //계양
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -121,7 +120,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="9"/>    //x좌표
+            android:layout_weight="76"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -131,33 +130,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="30"/>   //y좌표
+                android:layout_weight="42"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Cheorwon"
+                    android:id="@+id/text_Incheon_Gyeyang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="철원"
+                    android:text="계양"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Cheorwon"
+                    android:id="@+id/data_Incheon_Gyeyang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Cheorwon"
+                    android:layout_below="@+id/text_Incheon_Gyeyang"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -165,7 +164,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //춘천
+    //부평
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -174,7 +173,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="23"/>    //x좌표
+            android:layout_weight="77"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -184,33 +183,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="44"/>   //y좌표
+                android:layout_weight="49.5"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Chuncheon"
+                    android:id="@+id/text_Incheon_Bupyeong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="춘천"
+                    android:text="부평"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Chuncheon"
+                    android:id="@+id/data_Incheon_Bupyeong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Chuncheon"
+                    android:layout_below="@+id/text_Incheon_Bupyeong"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -218,7 +217,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //횡성
+    //동구
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -227,60 +226,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="36"/>    //x좌표
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:weightSum="100"
-            android:orientation="vertical">
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="57"/>   //y좌표
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10">
-                <TextView
-                    android:id="@+id/text_Gangwon_Hoengseong"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="횡성"
-                    android:background="#AFFFFFFF"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/data_Gangwon_Hoengseong"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="1dp"
-                    android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Hoengseong"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    //홍천
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="100"
-        android:orientation="horizontal">
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="36"/>    //x좌표
+            android:layout_weight="65"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -296,27 +242,27 @@
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Hongcheon"
+                    android:id="@+id/text_Incheon_Dong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="홍천"
+                    android:text="동구"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Hongcheon"
+                    android:id="@+id/data_Incheon_Dong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Hongcheon"
+                    android:layout_below="@+id/text_Incheon_Dong"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -324,7 +270,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //평창
+    //미추홀
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -333,7 +279,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="51"/>    //x좌표
+            android:layout_weight="67"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -343,33 +289,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="55"/>   //y좌표
+                android:layout_weight="54.5"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Pyeongchang"
+                    android:id="@+id/text_Incheon_Michuhol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="평창"
+                    android:text="미추홀"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Pyeongchang"
+                    android:id="@+id/data_Incheon_Michuhol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Pyeongchang"
+                    android:layout_below="@+id/text_Incheon_Michuhol"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -377,60 +323,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //원주
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="100"
-        android:orientation="horizontal">
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="29"/>    //x좌표
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:weightSum="100"
-            android:orientation="vertical">
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="66"/>   //y좌표
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10">
-                <TextView
-                    android:id="@+id/text_Gangwon_Wonju"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="원주"
-                    android:background="#AFFFFFFF"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/data_Gangwon_Wonju"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="1dp"
-                    android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Wonju"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    //삼척
+    //남동
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -449,86 +342,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="66"/>   //y좌표
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10">
-                <TextView
-                    android:id="@+id/text_Gangwon_Samcheok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="삼척"
-                    android:background="#AFFFFFFF"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/data_Gangwon_Samcheok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="1dp"
-                    android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Samcheok"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    //동해
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="100"
-        android:orientation="horizontal">
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="73"/>    //x좌표
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:weightSum="100"
-            android:orientation="vertical">
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
                 android:layout_weight="57"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Donghae"
+                    android:id="@+id/text_Incheon_Namdong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="동해"
+                    android:text="남동"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Donghae"
+                    android:id="@+id/data_Incheon_Namdong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Donghae"
+                    android:layout_below="@+id/text_Incheon_Namdong"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -536,7 +376,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //속초
+    //연수
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -545,7 +385,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="52"/>    //x좌표
+            android:layout_weight="68"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -555,33 +395,33 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="34"/>   //y좌표
+                android:layout_weight="62"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Sokcho"
+                    android:id="@+id/text_Incheon_Yeonsu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="속초"
+                    android:text="연수"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Sokcho"
+                    android:id="@+id/data_Incheon_Yeonsu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Sokcho"
+                    android:layout_below="@+id/text_Incheon_Yeonsu"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -589,7 +429,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //정선
+    //중구
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -598,7 +438,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="60"/>    //x좌표
+            android:layout_weight="56"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -608,33 +448,86 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="63"/>   //y좌표
+                android:layout_weight="52"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gangwon_Jeongseon"
+                    android:id="@+id/text_Incheon_Jung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="정선"
+                    android:text="중구"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gangwon_Jeongseon"
+                    android:id="@+id/data_Incheon_Jung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gangwon_Jeongseon"
+                    android:layout_below="@+id/text_Incheon_Jung"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    //옹진
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="47"/>    //x좌표
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:weightSum="100"
+            android:orientation="vertical">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="72"/>   //y좌표
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10">
+                <TextView
+                    android:id="@+id/text_Incheon_Ongjin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="옹진"
+                    android:background="#AFFFFFFF"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/data_Incheon_Ongjin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="0.131"
+                    android:background="@drawable/edge_radius_orange"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/text_Incheon_Ongjin"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
