@@ -14,7 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DataViewChungnam"></activity>
+        <activity android:name=".DataViewJeju"></activity>
+        <activity android:name=".DataViewUlsan" />
+        <activity android:name=".DataViewBusan" />
+        <activity android:name=".DataViewJeonnam" />
+        <activity android:name=".DataViewJeonbuk" />
+        <activity android:name=".DataViewGyeongbuk" />
+        <activity android:name=".DataViewDaegu" />
+        <activity android:name=".DataViewDaejeon" />
+        <activity android:name=".DataViewChungnam" />
         <activity android:name=".DataViewChungbuk" />
         <activity android:name=".DataViewIncheon" />
         <activity android:name=".DataViewSeoul" />

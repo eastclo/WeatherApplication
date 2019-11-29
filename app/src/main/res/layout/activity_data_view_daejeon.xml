@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:id="@+id/info_gwangju"
+    android:id="@+id/info_daejeon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible">
+    android:visibility="gone">
 
-    //광산구
+    //대덕
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +15,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="29"/>    //x좌표
+            android:layout_weight="54"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -25,22 +25,22 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="44"/>   //y좌표
+                android:layout_weight="36"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gwangju_Gwangsan"
+                    android:id="@+id/text_Daejeon_Daedeok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="광산구"
+                    android:text="대덕"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gwangju_Gwangsan"
+                    android:id="@+id/data_Daejeon_Daedeok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -51,60 +51,7 @@
                     android:background="@drawable/edge_radius_green"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gwangju_Gwangsan"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    //북구
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="100"
-        android:orientation="horizontal">
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="59"/>    //x좌표
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:weightSum="100"
-            android:orientation="vertical">
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="38"/>   //y좌표
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="10">
-                <TextView
-                    android:id="@+id/text_Gwangju_Buk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="북구"
-                    android:background="#AFFFFFFF"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/data_Gwangju_Buk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="1dp"
-                    android:paddingBottom="1dp"
-                    android:text="0.051"
-                    android:background="@drawable/edge_radius_green"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/text_Gwangju_Buk"
+                    android:layout_below="@+id/text_Daejeon_Daedeok"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -121,7 +68,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="67"/>    //x좌표
+            android:layout_weight="60"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -131,13 +78,13 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="54"/>   //y좌표
+                android:layout_weight="50"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gwangju_Dong"
+                    android:id="@+id/text_Daejeon_Dong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -146,7 +93,7 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gwangju_Dong"
+                    android:id="@+id/data_Daejeon_Dong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -157,7 +104,7 @@
                     android:background="@drawable/edge_radius_green"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gwangju_Dong"
+                    android:layout_below="@+id/text_Daejeon_Dong"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -165,7 +112,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    //남구
+    //중구
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -184,22 +131,22 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="60"/>   //y좌표
+                android:layout_weight="56"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gwangju_Nam"
+                    android:id="@+id/text_Daejeon_Jung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="남구"
+                    android:text="중구"
                     android:background="#AFFFFFFF"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gwangju_Nam"
+                    android:id="@+id/data_Daejeon_Jung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -210,7 +157,7 @@
                     android:background="@drawable/edge_radius_green"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gwangju_Nam"
+                    android:layout_below="@+id/text_Daejeon_Jung"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
@@ -227,7 +174,7 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="46"/>    //x좌표
+            android:layout_weight="34"/>    //x좌표
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -237,13 +184,13 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="50"/>   //y좌표
+                android:layout_weight="60"/>   //y좌표
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10">
                 <TextView
-                    android:id="@+id/text_Gwangju_Seo"
+                    android:id="@+id/text_Daejeon_Seo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -252,7 +199,7 @@
                     android:textColor="@android:color/black"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/data_Gwangju_Seo"
+                    android:id="@+id/data_Daejeon_Seo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -263,7 +210,60 @@
                     android:background="@drawable/edge_radius_green"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:layout_below="@+id/text_Gwangju_Seo"
+                    android:layout_below="@+id/text_Daejeon_Seo"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    //유성
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="34"/>    //x좌표
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:weightSum="100"
+            android:orientation="vertical">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40"/>   //y좌표
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10">
+                <TextView
+                    android:id="@+id/text_Daejeon_Yuseong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="유성"
+                    android:background="#AFFFFFFF"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/data_Daejeon_Yuseong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="0.051"
+                    android:background="@drawable/edge_radius_green"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/text_Daejeon_Yuseong"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"/>
             </RelativeLayout>
