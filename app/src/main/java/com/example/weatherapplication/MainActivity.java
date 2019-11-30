@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,15 +16,20 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import android.view.View.OnTouchListener;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class MainActivity extends AppCompatActivity {
     GpsUsing gps;
@@ -42,9 +48,42 @@ public class MainActivity extends AppCompatActivity {
     TextView nowTemp,nowRain,nowMax,nowMin,nowSky;
     ImageView nowIcon;
 
+    LinearLayout mainFrame;
+
     final String[] cityList = {"서울특별시","인천광역시","부산광역시","울산광역시","대구광역시","광주광역시","대전광역시","경기도","경상남도","경상북도","전라남도","전라북도","충청남도","충청북도","강원도"};
     final String[] cityCode = {"11B10101","11B20201","11H20201","11H20101","11H10701","11F20503","11C20401","11B20701","11H20301","11H10501","11F20503","11F10201","11C20404","11C10301","11D20501"};
     final String[] weatherCode = {"11B00000","11B00000","11H20000","11H20000","11H10000","11F20000","11C20000","11B00000","11H20000","11H10000","11F20000","11F10000","11C20000","11C10000","11D20000"};
+
+
+    public boolean onTouchEvent(MotionEvent event) {
+        float initialX=0;
+        float pointCurX=0;
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
+                initialX = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                pointCurX = event.getX();
+                Intent intent;
+                //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
+                if(pointCurX- initialX> 300){
+                    intent = new Intent(this, ClothesRecommendationActivity.class);
+                    intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }
+                else if(pointCurX- initialX< -300){
+                    intent =new Intent(this, AirPollutionDetailInfoActivity.class);
+                    intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    finish();
+                }
+        }
+        return true;
+    }
 
 
     @Override
@@ -86,11 +125,15 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     addresses = coder.getFromLocation(latitude, longitude, 5); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
                     adminArea = addresses.get(0).getAdminArea();
-                    if(adminArea.equals("서울특별시"))
-                        subLocality=addresses.get(0).getThoroughfare();
-                    else
-                        subLocality = addresses.get(0).getLocality();
-
+                    subLocality = addresses.get(0).getLocality();
+                    for(int i=0;i<7;i++)
+                    {
+                        if(adminArea.equals(cityList[i]))
+                        {
+                            subLocality=addresses.get(0).getThoroughfare();
+                            break;
+                        }
+                    }
                     adminAreaView.setText(adminArea);
                     subLocalityView.setText((subLocality));
 

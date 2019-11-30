@@ -40,10 +40,6 @@
             android:name=".GpsService"
             android:enabled="true"
             android:exported="true" />
-        <service
-            android:name=".WeatherUrlParser"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity
             android:name=".ClothesRecommendationActivity"
@@ -74,7 +70,9 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/MyTheme">
+            android:theme="@style/MyTheme"
+            android:launchMode="singleTask"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
