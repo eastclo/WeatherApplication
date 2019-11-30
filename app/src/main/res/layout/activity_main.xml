@@ -7,51 +7,797 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:src="@drawable/setting_icon"
+            android:scaleType="centerCrop"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/localityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/cityName"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/cityName"
+            android:text="구 이름"
+            android:textSize="25dp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/cityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="25dp"
+            android:text="시 이름"
+            android:textSize="40dp" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView5"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="#000000">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView7"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/stateicon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/statenow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="맑음" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tempnow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="10dp"
+            android:text="현재온도" />
+
+        <TextView
+            android:id="@+id/tempnowin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tempnow"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="10dp"
+            android:text="0℃" />
+
+        <TextView
+            android:id="@+id/rainper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tempnowin"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="10dp"
+            android:text="강수확률" />
+
+        <TextView
+            android:id="@+id/rainperin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rainper"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="10dp"
+            android:text="0%" />
+
+        <TextView
+            android:id="@+id/maxtemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="10dp"
+            android:text="최고온도" />
+
+        <TextView
+            android:id="@+id/maxtempin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/maxtemp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="10dp"
+            android:text="0℃" />
+
+        <TextView
+            android:id="@+id/mintemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/maxtempin"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="10dp"
+            android:text="최저온도" />
+
+        <TextView
+            android:id="@+id/mintempin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mintemp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="10dp"
+            android:text="0℃" />
+
+        <Button
+            android:id="@+id/airpollution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/maxtemp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="10dp"
+            android:text="\n자세한\n기상\n" />
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon3"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon6"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon9"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon12"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon15"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon18"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeafter21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0시" />
+
+                    <ImageView
+                        android:id="@+id/stateicon21"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tempafter21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/rainafter21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0%" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="#000000"
+            android:orientation="vertical" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/week1day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="월요일" />
+
+                        <ImageView
+                            android:id="@+id/stateicon1day"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:id="@+id/rain1day"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0%" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/maxtemp1day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#FF0000"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/mintemp1day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#0000FF"
+                        android:textSize="10pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/week2day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="월요일" />
+
+                        <ImageView
+                            android:id="@+id/stateicon2day"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:id="@+id/rain2day"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0%" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/maxtemp2day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#FF0000"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/mintemp2day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#0000FF"
+                        android:textSize="10pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/week3day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="월요일" />
+
+                        <ImageView
+                            android:id="@+id/stateicon3day"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:id="@+id/rain3day"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0%" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/maxtemp3day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#FF0000"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/mintemp3day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#0000FF"
+                        android:textSize="10pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/week4day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="월요일" />
+
+                        <ImageView
+                            android:id="@+id/stateicon4day"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:id="@+id/rain4day"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0%" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/maxtemp4day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#FF0000"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/mintemp4day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#0000FF"
+                        android:textSize="10pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/week5day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="월요일" />
+
+                        <ImageView
+                            android:id="@+id/stateicon5day"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:id="@+id/rain5day"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0%" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/maxtemp5day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#FF0000"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/mintemp5day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginEnd="80dp"
+                        android:text="0℃"
+                        android:textColor="#0000FF"
+                        android:textSize="10pt" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp">
+
+                        <TextView
+                            android:id="@+id/week6day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="월요일" />
+
+                        <ImageView
+                            android:id="@+id/stateicon6day"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="10dp" />
+
+                        <TextView
+                            android:id="@+id/rain6day"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0%" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/maxtemp6day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="80dp"
+                        android:textSize="10pt"
+                        android:textColor="#FF0000"
+                        android:text="0℃" />
+
+                    <TextView
+                        android:id="@+id/mintemp6day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginEnd="80dp"
+                        android:textSize="10pt"
+                        android:textColor="#0000FF"
+                        android:text="0℃" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
 </LinearLayout>
