@@ -7,12 +7,14 @@ import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,6 +35,11 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     TextView indicator5;
     TextView adminAreaView;
     TextView subLoocalityView;
+    RelativeLayout map;
+    View dataViewBusan, dataViewChungbuk, dataViewChungnam, dataViewDaegu, dataViewDaejeon, dataViewGangwon,
+            dataViewGwangju, dataViewGyeongbuk, dataViewGyeonggi, dataViewGyeongnam, dataViewIncheon,
+            dataViewJeju, dataViewJeonbuk, dataViewJeonnam, dataViewKorea, dataViewSeoul, dataViewUlsan;
+    View currDataView;
 
     LocalBroadcastManager mLocalBroadcastManager;
     BroadcastReceiver mReceiver;
@@ -87,6 +94,45 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
             }
         };
 
+        //데이터 출력, Spinner 리스너에서 visibility 설정
+        map = (RelativeLayout) findViewById(R.id.tab_content);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        dataViewKorea = inflater.inflate(R.layout.activity_data_view_korea, null);
+        map.addView(dataViewKorea);
+        dataViewSeoul = inflater.inflate(R.layout.activity_data_view_seoul, null);
+        map.addView(dataViewSeoul);
+        dataViewBusan = inflater.inflate(R.layout.activity_data_view_busan, null);
+        map.addView(dataViewBusan);
+        dataViewChungbuk = inflater.inflate(R.layout.activity_data_view_chungbuk, null);
+        map.addView(dataViewChungbuk);
+        dataViewChungnam = inflater.inflate(R.layout.activity_data_view_chungnam, null);
+        map.addView(dataViewChungnam);
+        dataViewDaegu = inflater.inflate(R.layout.activity_data_view_daegu, null);
+        map.addView(dataViewDaegu);
+        dataViewDaejeon = inflater.inflate(R.layout.activity_data_view_daejeon, null);
+        map.addView(dataViewDaejeon);
+        dataViewGangwon = inflater.inflate(R.layout.activity_data_view_gangwon, null);
+        map.addView(dataViewGangwon);
+        dataViewGwangju = inflater.inflate(R.layout.activity_data_view_gwangju, null);
+        map.addView(dataViewGwangju);
+        dataViewGyeongbuk = inflater.inflate(R.layout.activity_data_view_gyeongbuk, null);
+        map.addView(dataViewGyeongbuk);
+        dataViewGyeonggi = inflater.inflate(R.layout.activity_data_view_gyeonggi, null);
+        map.addView(dataViewGyeonggi);
+        dataViewGyeongnam = inflater.inflate(R.layout.activity_data_view_gyeongnam, null);
+        map.addView(dataViewGyeongnam);
+        dataViewIncheon = inflater.inflate(R.layout.activity_data_view_incheon, null);
+        map.addView(dataViewIncheon);
+        dataViewJeju = inflater.inflate(R.layout.activity_data_view_jeju, null);
+        map.addView(dataViewJeju);
+        dataViewJeonbuk = inflater.inflate(R.layout.activity_data_view_jeonbuk, null);
+        map.addView(dataViewJeonbuk);
+        dataViewJeonnam = inflater.inflate(R.layout.activity_data_view_jeonnam, null);
+        map.addView(dataViewJeonnam);
+        dataViewUlsan = inflater.inflate(R.layout.activity_data_view_ulsan, null);
+        map.addView(dataViewUlsan);
+        currDataView = dataViewKorea;
+
         spinner = (Spinner)findViewById(R.id.location_select);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cityName, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,13 +144,13 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         String[] array = getResources().getStringArray(R.array.cityName);
         int cnt = 0;
 
-        for (String tmp : array){
-            if(adminArea.contains(tmp)){
+        for (String tmp : array) {
+            if (adminArea.contains(tmp)) {
                 spinner.setSelection(cnt);
                 break;
             }
             cnt++;
-    }
+        }
     }
 
     @Override
@@ -143,55 +189,106 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         ImageView img = findViewById(R.id.map);
         switch(position){
             case 0:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_korea);
+                dataViewKorea.setVisibility(View.VISIBLE);
+                currDataView = dataViewKorea;
                 break;
             case 1:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_gangwon);
+                dataViewGangwon.setVisibility(View.VISIBLE);
+                currDataView = dataViewGangwon;
                 break;
             case 2:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_gyeonggido);
+                dataViewGyeonggi.setVisibility(View.VISIBLE);
+                currDataView = dataViewGyeonggi;
                 break;
             case 3:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_gyeongsangnamdo);
+                dataViewGyeongnam.setVisibility(View.VISIBLE);
+                currDataView = dataViewGyeongnam;
                 break;
             case 4:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_gyeongsangbukdo);
+                dataViewGyeongbuk.setVisibility(View.VISIBLE);
+                currDataView = dataViewGyeongbuk;
                 break;
             case 5:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_gwangju);
+                dataViewGwangju.setVisibility(View.VISIBLE);
+                currDataView = dataViewGwangju;
                 break;
             case 6:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_daegu);
+                dataViewDaegu.setVisibility(View.VISIBLE);
+                currDataView = dataViewDaegu;
                 break;
             case 7:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_daejeon);
+                dataViewDaejeon.setVisibility(View.VISIBLE);
+                currDataView = dataViewDaejeon;
                 break;
             case 8:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_busan);
+                dataViewBusan.setVisibility(View.VISIBLE);
+                currDataView = dataViewBusan;
                 break;
             case 9:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_seoul);
+                dataViewSeoul.setVisibility(View.VISIBLE);
+                currDataView = dataViewSeoul;
                 break;
             case 10:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_ulsan);
+                dataViewUlsan.setVisibility(View.VISIBLE);
+                currDataView = dataViewUlsan;
                 break;
             case 11:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_incheon);
+                dataViewIncheon.setVisibility(View.VISIBLE);
+                currDataView = dataViewIncheon;
                 break;
             case 12:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_jeollanamdo);
+                dataViewJeonnam.setVisibility(View.VISIBLE);
+                currDataView = dataViewJeonnam;
                 break;
             case 13:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_jeollabukdo);
+                dataViewJeonbuk.setVisibility(View.VISIBLE);
+                currDataView = dataViewJeonbuk;
                 break;
             case 14:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_jeju);
+                dataViewJeju.setVisibility(View.VISIBLE);
+                currDataView = dataViewJeju;
                 break;
             case 15:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_chungcheongnamdo);
+                dataViewChungnam.setVisibility(View.VISIBLE);
+                currDataView = dataViewChungnam;
                 break;
             case 16:
+                currDataView.setVisibility(View.GONE);
                 img.setImageResource(R.drawable.map_chungcheongbukdo);
+                dataViewChungbuk.setVisibility(View.VISIBLE);
+                currDataView = dataViewChungbuk;
                 break;
 
         }
