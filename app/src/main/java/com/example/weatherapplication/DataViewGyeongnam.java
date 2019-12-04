@@ -19,24 +19,24 @@ public class DataViewGyeongnam extends RelativeLayout {
 
     public DataViewGyeongnam(Context context, View view) {
         super(context);
-        Changwon = view.findViewById(R.id.data_Gyeongnam_Changwon);
-        Gimhae = view.findViewById(R.id.data_Gyeongnam_Gimhae);
-        Jinju = view.findViewById(R.id.data_Gyeongnam_Jinju);
-        Yangsan = view.findViewById(R.id.data_Gyeongnam_Yangsan);
-        Geoje = view.findViewById(R.id.data_Gyeongnam_Geoje);
-        Tongyeong = view.findViewById(R.id.data_Gyeongnam_Tongyeong);
-        Sacheon = view.findViewById(R.id.data_Gyeongnam_Sacheon);
-        Miryang = view.findViewById(R.id.data_Gyeongnam_Miryang);
-        Haman = view.findViewById(R.id.data_Gyeongnam_Haman);
-        Geochang = view.findViewById(R.id.data_Gyeongnam_Geochang);
-        Changnyeong = view.findViewById(R.id.data_Gyeongnam_Changnyeong);
-        Goseong = view.findViewById(R.id.data_Gyeongnam_Goseong);
-        Namhae = view.findViewById(R.id.data_Gyeongnam_Namhae);
-        Hapcheon = view.findViewById(R.id.data_Gyeongnam_Hapcheon);
-        Hadong = view.findViewById(R.id.data_Gyeongnam_Hadong);
-        Hamyang = view.findViewById(R.id.data_Gyeongnam_Hamyang);
-        Sancheong = view.findViewById(R.id.data_Gyeongnam_Sancheong);
-        Uiryeong = view.findViewById(R.id.data_Gyeongnam_Uiryeong);
+        this.Changwon = view.findViewById(R.id.data_Gyeongnam_Changwon);
+        this.Gimhae = view.findViewById(R.id.data_Gyeongnam_Gimhae);
+        this.Jinju = view.findViewById(R.id.data_Gyeongnam_Jinju);
+        this.Yangsan = view.findViewById(R.id.data_Gyeongnam_Yangsan);
+        this.Geoje = view.findViewById(R.id.data_Gyeongnam_Geoje);
+        this.Tongyeong = view.findViewById(R.id.data_Gyeongnam_Tongyeong);
+        this.Sacheon = view.findViewById(R.id.data_Gyeongnam_Sacheon);
+        this.Miryang = view.findViewById(R.id.data_Gyeongnam_Miryang);
+        this.Haman = view.findViewById(R.id.data_Gyeongnam_Haman);
+        this.Geochang = view.findViewById(R.id.data_Gyeongnam_Geochang);
+        this.Changnyeong = view.findViewById(R.id.data_Gyeongnam_Changnyeong);
+        this.Goseong = view.findViewById(R.id.data_Gyeongnam_Goseong);
+        this.Namhae = view.findViewById(R.id.data_Gyeongnam_Namhae);
+        this.Hapcheon = view.findViewById(R.id.data_Gyeongnam_Hapcheon);
+        this.Hadong = view.findViewById(R.id.data_Gyeongnam_Hadong);
+        this.Hamyang = view.findViewById(R.id.data_Gyeongnam_Hamyang);
+        this.Sancheong = view.findViewById(R.id.data_Gyeongnam_Sancheong);
+        this.Uiryeong = view.findViewById(R.id.data_Gyeongnam_Uiryeong);
     }
 
     /*finedust: ~30 좋음, ~80 보통, ~150 나쁨

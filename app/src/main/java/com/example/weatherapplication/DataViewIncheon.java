@@ -18,15 +18,15 @@ public class DataViewIncheon extends RelativeLayout {
 
     public DataViewIncheon(Context context, View view) {
         super(context);
-        Bupyeong = view.findViewById(R.id.data_Incheon_Bupyeong);
-        Dong = view.findViewById(R.id.data_Incheon_Dong);
-        Gyeyang = view.findViewById(R.id.data_Incheon_Gyeyang);
-        Jung = view.findViewById(R.id.data_Incheon_Jung);
-        Michuhol = view.findViewById(R.id.data_Incheon_Michuhol);
-        Namdong = view.findViewById(R.id.data_Incheon_Namdong);
-        Seo = view.findViewById(R.id.data_Incheon_Seo);
-        Yeonsu = view.findViewById(R.id.data_Incheon_Yeonsu);
-        Ganghwa = view.findViewById(R.id.data_Incheon_Ganghwa);
+        this.Bupyeong = view.findViewById(R.id.data_Incheon_Bupyeong);
+        this.Dong = view.findViewById(R.id.data_Incheon_Dong);
+        this.Gyeyang = view.findViewById(R.id.data_Incheon_Gyeyang);
+        this.Jung = view.findViewById(R.id.data_Incheon_Jung);
+        this.Michuhol = view.findViewById(R.id.data_Incheon_Michuhol);
+        this.Namdong = view.findViewById(R.id.data_Incheon_Namdong);
+        this.Seo = view.findViewById(R.id.data_Incheon_Seo);
+        this.Yeonsu = view.findViewById(R.id.data_Incheon_Yeonsu);
+        this.Ganghwa = view.findViewById(R.id.data_Incheon_Ganghwa);
     }
 
     /*finedust: ~30 좋음, ~80 보통, ~150 나쁨

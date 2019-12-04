@@ -18,11 +18,11 @@ public class DataViewUlsan extends RelativeLayout {
 
     public DataViewUlsan(Context context, View view) {
         super(context);
-        Buk = view.findViewById(R.id.data_Ulsan_Buk);
-        Dong = view.findViewById(R.id.data_Ulsan_Dong);
-        Jung = view.findViewById(R.id.data_Ulsan_Jung);
-        Nam = view.findViewById(R.id.data_Ulsan_Nam);
-        Ulju = view.findViewById(R.id.data_Ulsan_Ulju);
+        this.Buk = view.findViewById(R.id.data_Ulsan_Buk);
+        this.Dong = view.findViewById(R.id.data_Ulsan_Dong);
+        this.Jung = view.findViewById(R.id.data_Ulsan_Jung);
+        this.Nam = view.findViewById(R.id.data_Ulsan_Nam);
+        this.Ulju = view.findViewById(R.id.data_Ulsan_Ulju);
     }
 
     /*finedust: ~30 좋음, ~80 보통, ~150 나쁨

@@ -20,37 +20,37 @@ public class DataViewGyeonggi extends RelativeLayout {
 
     public DataViewGyeonggi(Context context, View view) {
         super(context);
-        Suwon = view.findViewById(R.id.data_Gyeonggi_Suwon);
-        Seongnam = view.findViewById(R.id.data_Gyeonggi_Seongnam);
-        Goyang = view.findViewById(R.id.data_Gyeonggi_Goyang);
-        Yongin = view.findViewById(R.id.data_Gyeonggi_Yongin);
-        Bucheon = view.findViewById(R.id.data_Gyeonggi_Bucheon);
-        Ansan = view.findViewById(R.id.data_Gyeonggi_Ansan);
-        Anyang = view.findViewById(R.id.data_Gyeonggi_Anyang);
-        Namyangju = view.findViewById(R.id.data_Gyeonggi_Namyangju);
-        Hwaseong = view.findViewById(R.id.data_Gyeonggi_Hwaseong);
-        Uijeongbu = view.findViewById(R.id.data_Gyeonggi_Uijeongbu);
-        Siheung = view.findViewById(R.id.data_Gyeonggi_Siheung);
-        Pyeongtaek = view.findViewById(R.id.data_Gyeonggi_Pyeongtaek);
-        Gwangmyeong = view.findViewById(R.id.data_Gyeonggi_Gwangmyeong);
-        Paju = view.findViewById(R.id.data_Gyeonggi_Paju);
-        Gunpo = view.findViewById(R.id.data_Gyeonggi_Gunpo);
-        Gwangju = view.findViewById(R.id.data_Gyeonggi_Gwangju);
-        Gimpo = view.findViewById(R.id.data_Gyeonggi_Gimpo);
-        Icheon = view.findViewById(R.id.data_Gyeonggi_Icheon);
-        Yangju = view.findViewById(R.id.data_Gyeonggi_Yangju);
-        Guri = view.findViewById(R.id.data_Gyeonggi_Guri);
-        Osan = view.findViewById(R.id.data_Gyeonggi_Osan);
-        Anseong = view.findViewById(R.id.data_Gyeonggi_Anseong);
-        Uiwang = view.findViewById(R.id.data_Gyeonggi_Uiwang);
-        Hanam = view.findViewById(R.id.data_Gyeonggi_Hanam);
-        Pocheon = view.findViewById(R.id.data_Gyeonggi_Pocheon);
-        Dongducheon = view.findViewById(R.id.data_Gyeonggi_Dongducheon);
-        Gwacheon = view.findViewById(R.id.data_Gyeonggi_Gwacheon);
-        Yeoju = view.findViewById(R.id.data_Gyeonggi_Yeoju);
-        Yangpyeong = view.findViewById(R.id.data_Gyeonggi_Yangpyeong);
-        Gapyeong = view.findViewById(R.id.data_Gyeonggi_Gapyeong);
-        Yeoncheon = view.findViewById(R.id.data_Gyeonggi_Yeoncheon);
+        this.Suwon = view.findViewById(R.id.data_Gyeonggi_Suwon);
+        this.Seongnam = view.findViewById(R.id.data_Gyeonggi_Seongnam);
+        this.Goyang = view.findViewById(R.id.data_Gyeonggi_Goyang);
+        this.Yongin = view.findViewById(R.id.data_Gyeonggi_Yongin);
+        this.Bucheon = view.findViewById(R.id.data_Gyeonggi_Bucheon);
+        this.Ansan = view.findViewById(R.id.data_Gyeonggi_Ansan);
+        this.Anyang = view.findViewById(R.id.data_Gyeonggi_Anyang);
+        this.Namyangju = view.findViewById(R.id.data_Gyeonggi_Namyangju);
+        this.Hwaseong = view.findViewById(R.id.data_Gyeonggi_Hwaseong);
+        this.Uijeongbu = view.findViewById(R.id.data_Gyeonggi_Uijeongbu);
+        this.Siheung = view.findViewById(R.id.data_Gyeonggi_Siheung);
+        this.Pyeongtaek = view.findViewById(R.id.data_Gyeonggi_Pyeongtaek);
+        this.Gwangmyeong = view.findViewById(R.id.data_Gyeonggi_Gwangmyeong);
+        this.Paju = view.findViewById(R.id.data_Gyeonggi_Paju);
+        this.Gunpo = view.findViewById(R.id.data_Gyeonggi_Gunpo);
+        this.Gwangju = view.findViewById(R.id.data_Gyeonggi_Gwangju);
+        this.Gimpo = view.findViewById(R.id.data_Gyeonggi_Gimpo);
+        this.Icheon = view.findViewById(R.id.data_Gyeonggi_Icheon);
+        this.Yangju = view.findViewById(R.id.data_Gyeonggi_Yangju);
+        this.Guri = view.findViewById(R.id.data_Gyeonggi_Guri);
+        this.Osan = view.findViewById(R.id.data_Gyeonggi_Osan);
+        this.Anseong = view.findViewById(R.id.data_Gyeonggi_Anseong);
+        this.Uiwang = view.findViewById(R.id.data_Gyeonggi_Uiwang);
+        this.Hanam = view.findViewById(R.id.data_Gyeonggi_Hanam);
+        this.Pocheon = view.findViewById(R.id.data_Gyeonggi_Pocheon);
+        this.Dongducheon = view.findViewById(R.id.data_Gyeonggi_Dongducheon);
+        this.Gwacheon = view.findViewById(R.id.data_Gyeonggi_Gwacheon);
+        this.Yeoju = view.findViewById(R.id.data_Gyeonggi_Yeoju);
+        this.Yangpyeong = view.findViewById(R.id.data_Gyeonggi_Yangpyeong);
+        this.Gapyeong = view.findViewById(R.id.data_Gyeonggi_Gapyeong);
+        this.Yeoncheon = view.findViewById(R.id.data_Gyeonggi_Yeoncheon);
     }
 
     /*finedust: ~30 좋음, ~80 보통, ~150 나쁨

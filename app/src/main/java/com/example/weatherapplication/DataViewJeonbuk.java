@@ -18,20 +18,20 @@ public class DataViewJeonbuk extends RelativeLayout {
 
     public DataViewJeonbuk(Context context, View view) {
         super(context);
-        Jeonju = view.findViewById(R.id.data_Jeonbuk_Jeonju);
-        Iksan = view.findViewById(R.id.data_Jeonbuk_Iksan);
-        Gunsan = view.findViewById(R.id.data_Jeonbuk_Gunsan);
-        Jeongeup = view.findViewById(R.id.data_Jeonbuk_Jeongeup);
-        Gimje = view.findViewById(R.id.data_Jeonbuk_Gimje);
-        Namwon = view.findViewById(R.id.data_Jeonbuk_Namwon);
-        Wanju = view.findViewById(R.id.data_Jeonbuk_Wanju);
-        Gochang = view.findViewById(R.id.data_Jeonbuk_Gochang);
-        Buan = view.findViewById(R.id.data_Jeonbuk_Buan);
-        Sunchang = view.findViewById(R.id.data_Jeonbuk_Sunchang);
-        Imsil = view.findViewById(R.id.data_Jeonbuk_Imsil);
-        Muju = view.findViewById(R.id.data_Jeonbuk_Muju);
-        Jinan = view.findViewById(R.id.data_Jeonbuk_Jinan);
-        Jangsu = view.findViewById(R.id.data_Jeonbuk_Jangsu);
+        this.Jeonju = view.findViewById(R.id.data_Jeonbuk_Jeonju);
+        this.Iksan = view.findViewById(R.id.data_Jeonbuk_Iksan);
+        this.Gunsan = view.findViewById(R.id.data_Jeonbuk_Gunsan);
+        this.Jeongeup = view.findViewById(R.id.data_Jeonbuk_Jeongeup);
+        this.Gimje = view.findViewById(R.id.data_Jeonbuk_Gimje);
+        this.Namwon = view.findViewById(R.id.data_Jeonbuk_Namwon);
+        this.Wanju = view.findViewById(R.id.data_Jeonbuk_Wanju);
+        this.Gochang = view.findViewById(R.id.data_Jeonbuk_Gochang);
+        this.Buan = view.findViewById(R.id.data_Jeonbuk_Buan);
+        this.Sunchang = view.findViewById(R.id.data_Jeonbuk_Sunchang);
+        this.Imsil = view.findViewById(R.id.data_Jeonbuk_Imsil);
+        this.Muju = view.findViewById(R.id.data_Jeonbuk_Muju);
+        this.Jinan = view.findViewById(R.id.data_Jeonbuk_Jinan);s
+        this.Jangsu = view.findViewById(R.id.data_Jeonbuk_Jangsu);
     }
 
 
