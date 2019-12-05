@@ -32,12 +32,15 @@ public class WeatherUrlParser {
     public String rnSt2day="";
     public String sky1day="";
     public String sky2day="";
+    public String rain1day="";
+    public String rain2day="";
     String tomorrow;
     String secondday;
 
     public List<String> POPL;
     public List<String> T3HL;
     public List<String> SKYL;
+    public List<String> PTYL;
 
     public int x;
     public int y;
@@ -132,6 +135,7 @@ public class WeatherUrlParser {
                     POPL.add("");
                     T3HL.add("");
                     SKYL.add("");
+                    PTYL.add("");
                 }
                 break;
             }
@@ -293,6 +297,9 @@ public class WeatherUrlParser {
                                     else if(categoryName.equals("SKY")) {
                                         SKYL.set(indexTime, dataS);
                                     }
+                                    else if(categoryName.equals("PTY")) {
+                                        PTYL.set(indexTime,dataS);
+                                    }
                                     else if(categoryName.equals("T3H")) {
                                         T3HL.set(indexTime, dataS);
                                     }
@@ -315,6 +322,11 @@ public class WeatherUrlParser {
                                         else if(categoryName.equals("SKY"))
                                             sky1day=dataS;
                                     }
+                                    if(categoryName.equals("PTY"))
+                                    {
+                                        if(!dataS.equals("0"))
+                                            rain1day=dataS;
+                                    }
                                     if(categoryName.equals("TMX"))
                                         taMAX1day=dataS;
                                     else if(categoryName.equals("TMN"))
@@ -329,6 +341,11 @@ public class WeatherUrlParser {
                                             rnSt2day=dataS;
                                         else if(categoryName.equals("SKY"))
                                             sky2day=dataS;
+                                    }
+                                    if(categoryName.equals("PTY"))
+                                    {
+                                        if(!dataS.equals("0"))
+                                            rain2day=dataS;
                                     }
                                     else if(categoryName.equals("TMX"))
                                         taMAX2day=dataS;
