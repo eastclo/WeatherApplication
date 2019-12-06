@@ -10,22 +10,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DataViewDaegu extends RelativeLayout {
-    //data set
-    public final static String fineDust = "FINE_DUST", ultraFineDust = "ULTRA_FINE_DUST", ozone = "OZONE";
+public class DataViewDaegu extends RelativeLayout implements DataView{
 
     TextView Jung, Dong, Seo, Nam, Buk, Suseong, Dalseo, Dalseong;
 
     public DataViewDaegu(Context context, View view) {
         super(context);
-        this.Jung = findViewById(R.id.data_Daegu_Jung);
-        this.Dong = findViewById(R.id.data_Daegu_Dong);
-        this.Seo = findViewById(R.id.data_Daegu_Seo);
-        this.Nam = findViewById(R.id.data_Daegu_Nam);
-        this.Buk = findViewById(R.id.data_Daegu_Buk);
-        this.Suseong = findViewById(R.id.data_Daegu_Suseong);
-        this.Dalseo = findViewById(R.id.data_Daegu_Dalseo);
-        this.Dalseong = findViewById(R.id.data_Daegu_Dalseong);
+        this.Jung = view.findViewById(R.id.data_Daegu_Jung);
+        this.Dong = view.findViewById(R.id.data_Daegu_Dong);
+        this.Seo = view.findViewById(R.id.data_Daegu_Seo);
+        this.Nam = view.findViewById(R.id.data_Daegu_Nam);
+        this.Buk = view.findViewById(R.id.data_Daegu_Buk);
+        this.Suseong = view.findViewById(R.id.data_Daegu_Suseong);
+        this.Dalseo = view.findViewById(R.id.data_Daegu_Dalseo);
+        this.Dalseong = view.findViewById(R.id.data_Daegu_Dalseong);
     }
 
 
@@ -51,7 +49,7 @@ public class DataViewDaegu extends RelativeLayout {
 
     public Drawable setColor(double blue, double green, double orange, String data){
         Drawable drawable;
-        if(data == "-"){
+        if(data.equals("-")){
             drawable = getResources().getDrawable(R.drawable.edge_radius_gray);
             return drawable;
         }

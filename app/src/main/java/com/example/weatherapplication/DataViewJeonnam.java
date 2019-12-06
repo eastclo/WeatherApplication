@@ -10,9 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DataViewJeonnam extends RelativeLayout {
-    //data set
-    public final static String fineDust = "FINE_DUST", ultraFineDust = "ULTRA_FINE_DUST", ozone = "OZONE";
+public class DataViewJeonnam extends RelativeLayout implements DataView{
 
     TextView Yeosu, Mokpo, Suncheon, Gwangyang, Naju, Muan, Haenam, Goheung, Hwasun, Yeongam, Yeonggwang, Wando,
             Damyang, Boseong, Jangseong, Jangheung, Gangjin, Sinan, Hampyeong, Jindo, Gokseong, Gurye;
@@ -66,7 +64,7 @@ public class DataViewJeonnam extends RelativeLayout {
 
     public Drawable setColor(double blue, double green, double orange, String data){
         Drawable drawable;
-        if(data == "-"){
+        if(data.equals("-")){
             drawable = getResources().getDrawable(R.drawable.edge_radius_gray);
             return drawable;
         }

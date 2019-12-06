@@ -10,9 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DataViewBusan extends RelativeLayout {
-    //data set
-    public final static String fineDust = "FINE_DUST", ultraFineDust = "ULTRA_FINE_DUST", ozone = "OZONE";
+public class DataViewBusan extends RelativeLayout implements DataView {
 
     TextView Buk, Busanjin, Dong, Dongnae, Gangseo, Geumjeong, Haeundae,
             Jung, Nam, Saha, Sasang, Seo, Suyeong, Yeongdo, Yeonje, Gijang;
@@ -59,7 +57,7 @@ public class DataViewBusan extends RelativeLayout {
 
     public Drawable setColor(double blue, double green, double orange, String data){
         Drawable drawable;
-        if(data == "-"){
+        if(data.equals("-")){
             drawable = getResources().getDrawable(R.drawable.edge_radius_gray);
             return drawable;
         }

@@ -10,9 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DataViewDaejeon extends RelativeLayout {
-    //data set
-    public final static String fineDust = "FINE_DUST", ultraFineDust = "ULTRA_FINE_DUST", ozone = "OZONE";
+public class DataViewDaejeon extends RelativeLayout implements DataView{
 
     TextView Daedeok, Dong, Jung, Seo, Yuseong;
 
@@ -47,7 +45,7 @@ public class DataViewDaejeon extends RelativeLayout {
 
     public Drawable setColor(double blue, double green, double orange, String data){
         Drawable drawable;
-        if(data == "-"){
+        if(data.equals("-")){
             drawable = getResources().getDrawable(R.drawable.edge_radius_gray);
             return drawable;
         }

@@ -10,19 +10,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DataViewGwangju extends RelativeLayout {
-    //data set
-    public final static String fineDust = "FINE_DUST", ultraFineDust = "ULTRA_FINE_DUST", ozone = "OZONE";
+public class DataViewGwangju extends RelativeLayout implements DataView{
 
     TextView Buk, Dong, Gwangsan, Nam, Seo;
 
     public DataViewGwangju(Context context, View view) {
         super(context);
-        this.Buk = findViewById(R.id.data_Gwangju_Buk);
-        this.Dong = findViewById(R.id.data_Gwangju_Dong);
-        this.Gwangsan = findViewById(R.id.data_Gwangju_Gwangsan);
-        this.Nam = findViewById(R.id.data_Gwangju_Nam);
-        this.Seo = findViewById(R.id.data_Gwangju_Seo);
+        this.Buk = view.findViewById(R.id.data_Gwangju_Buk);
+        this.Dong = view.findViewById(R.id.data_Gwangju_Dong);
+        this.Gwangsan = view.findViewById(R.id.data_Gwangju_Gwangsan);
+        this.Nam = view.findViewById(R.id.data_Gwangju_Nam);
+        this.Seo = view.findViewById(R.id.data_Gwangju_Seo);
     }
 
     /*finedust: ~30 좋음, ~80 보통, ~150 나쁨
@@ -47,7 +45,7 @@ public class DataViewGwangju extends RelativeLayout {
 
     public Drawable setColor(double blue, double green, double orange, String data){
         Drawable drawable;
-        if(data == "-"){
+        if(data.equals("-")){
             drawable = getResources().getDrawable(R.drawable.edge_radius_gray);
             return drawable;
         }
