@@ -30,7 +30,7 @@ public class DataViewJeonbuk extends RelativeLayout {
         this.Sunchang = view.findViewById(R.id.data_Jeonbuk_Sunchang);
         this.Imsil = view.findViewById(R.id.data_Jeonbuk_Imsil);
         this.Muju = view.findViewById(R.id.data_Jeonbuk_Muju);
-        this.Jinan = view.findViewById(R.id.data_Jeonbuk_Jinan);s
+        this.Jinan = view.findViewById(R.id.data_Jeonbuk_Jinan);
         this.Jangsu = view.findViewById(R.id.data_Jeonbuk_Jangsu);
     }
 
