@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result){
             changeNow(parsing.POP,parsing.SKY,parsing.PTY,parsing.T3H,parsing.TMX,parsing.TMN);
-            changeAfter(parsing.POPL,parsing.T3HL,parsing.SKYL,parsing.timeList);
+            changeAfter(parsing.POPL,parsing.T3HL,parsing.SKYL,parsing.timeList,parsing.PTYL);
             changeWeek(parsing,weekparsing);
 
         }
@@ -282,21 +282,25 @@ public class MainActivity extends AppCompatActivity {
         {
             switch(PTYcheck){
                 case 1 : {
+                    nowIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.rain));
                     nowSky.setText("비");
                 }break;
                 case 2 : {
+                    nowIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.rain));
                     nowSky.setText("비/눈");
                 }break;
                 case 3 : {
+                    nowIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.snow));
                     nowSky.setText("눈");
                 }break;
                 case 4 : {
+                    nowIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.rain));
                     nowSky.setText("소나기");
                 }break;
             }
         }
     }
-    public void changeAfter(List<String> POP, List<String> L3H,List<String> SKY,List<String> timeList)
+    public void changeAfter(List<String> POP, List<String> L3H,List<String> SKY,List<String> timeList,List<String> PTY)
     {
         List<TextView> tempafterView = new ArrayList<TextView>();
         List<TextView> rainafterView = new ArrayList<TextView>();
@@ -383,16 +387,27 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0;i<rainafterView.size();i++){
             inputI=imageafterView.get(i);
             int SKYcheck = Integer.parseInt(SKY.get(i));
-            switch(SKYcheck){
-                case 1 : {
-                    inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sun));
-                }break;
-                case 3 : {
-                    inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.clouds_sun));
-                }break;
-                case 4 : {
-                    inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloud));
-                }break;
+            int PTYcheck = Integer.parseInt(PTY.get(i));
+            if(PTY.get(i).equals("0"))
+            {
+                switch(SKYcheck){
+                    case 1 : {
+                        inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sun));
+                    }break;
+                    case 3 : {
+                        inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.clouds_sun));
+                    }break;
+                    case 4 : {
+                        inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloud));
+                    }break;
+                }
+            }
+            else
+            {
+                if(PTYcheck==3)
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.snow));
+                else
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.rain));
             }
         }
     }
@@ -535,6 +550,21 @@ public class MainActivity extends AppCompatActivity {
                 }break;
                 case "흐림" : {
                     inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.cloud));
+                }break;
+                case "비" : {
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.rain));
+                }break;
+                case "눈" : {
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.snow));
+                }break;
+                case "비/눈" : {
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.rain));
+                }break;
+                case "눈/비" : {
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.snow));
+                }break;
+                default : {
+                    inputI.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sun));
                 }break;
             }
         }

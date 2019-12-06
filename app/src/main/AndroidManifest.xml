@@ -43,7 +43,8 @@
 
         <activity
             android:name=".ClothesRecommendationActivity"
-            android:theme="@style/MyTheme">
+            android:theme="@style/MyTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,7 +62,8 @@
         </activity>
         <activity
             android:name=".RealTimeWeather"
-            android:theme="@style/MyTheme">
+            android:theme="@style/MyTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,7 +74,8 @@
             android:name=".MainActivity"
             android:theme="@style/MyTheme"
             android:launchMode="singleTask"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
