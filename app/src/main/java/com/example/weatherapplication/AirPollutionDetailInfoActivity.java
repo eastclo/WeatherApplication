@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,6 +44,7 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
             dataViewJeju, dataViewJeonbuk, dataViewJeonnam, dataViewKorea, dataViewSeoul, dataViewUlsan;
     View currDataView;
 
+    //gps 수신을 위한 방송수신자
     LocalBroadcastManager mLocalBroadcastManager;
     BroadcastReceiver mReceiver;
 
@@ -49,25 +53,102 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     String subLocality;
     List<Address> addresses = null;
 
+    //데이터 파싱을 위한 변수 선언
+    final String[] cityList = {"전체","강원도","경기도","경상남도","경상북도","광주광역시","대구광역시","대전광역시","부산광역시","서울특별시","울산광역시","인천광역시","전라남도","전라북도","제주특별자치도","충청남도","충청북도"};
+    String[] cityArray;
+    String pollution = "PM25";   //PM10, PM25, O3 등
+    int position = 1;
+
+    Handler mhandler = new Handler();
+    ArrayList<Pair<String, String>> dataList;
+    DataView settingView;
+
+    private class ThreadParser extends Thread{    //파싱
+        @Override
+        public void run() {
+            AirQualityDataParser parser = new AirQualityDataParser(cityArray[position], pollution);
+            dataList = parser.sggParsing();
+            switch (position) {
+                case 0:
+                    settingView = new DataViewKorea(getApplicationContext(), currDataView);
+                case 1:
+                    settingView = new DataViewGangwon(getApplicationContext(), currDataView);
+                    break;
+                case 2:
+                    settingView = new DataViewGyeonggi(getApplicationContext(), currDataView);
+                    break;
+                case 3:
+                    settingView = new DataViewGyeongnam(getApplicationContext(), currDataView);
+                    break;
+                case 4:
+                    settingView = new DataViewGyeongbuk(getApplicationContext(), currDataView);
+                    break;
+                case 5:
+                    settingView = new DataViewGwangju(getApplicationContext(), currDataView);
+                    break;
+                case 6:
+                    settingView = new DataViewDaegu(getApplicationContext(), currDataView);
+                    break;
+                case 7:
+                    settingView = new DataViewDaejeon(getApplicationContext(), currDataView);
+                    break;
+                case 8:
+                    settingView = new DataViewBusan(getApplicationContext(), currDataView);
+                    break;
+                case 9:
+                    settingView = new DataViewSeoul(getApplicationContext(), currDataView);
+                    break;
+                case 10:
+                    settingView = new DataViewUlsan(getApplicationContext(), currDataView);
+                    break;
+                case 11:
+                    settingView = new DataViewIncheon(getApplicationContext(), currDataView);
+                    break;
+                case 12:
+                    settingView = new DataViewJeonnam(getApplicationContext(), currDataView);
+                    break;
+                case 13:
+                    settingView = new DataViewJeonbuk(getApplicationContext(), currDataView);
+                    break;
+                case 14:
+                    settingView = new DataViewJeju(getApplicationContext(), currDataView);
+                    break;
+                case 15:
+                    settingView = new DataViewChungnam(getApplicationContext(), currDataView);
+                    break;
+                case 16:
+                    settingView = new DataViewChungbuk(getApplicationContext(), currDataView);
+                    break;
+            }
+
+            mhandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    settingView.setData(dataList, DataView.fineDust);
+                }
+            });
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_air_pollution_detail_info);
-        adminAreaView = (TextView)findViewById(R.id.admin_area);
-        subLoocalityView = (TextView)findViewById(R.id.sub_locality);
+        adminAreaView = findViewById(R.id.admin_area);
+        subLoocalityView = findViewById(R.id.sub_locality);
 
-        indicator1 = (TextView)findViewById(R.id.tab1_indicator) ;
-        indicator2 = (TextView)findViewById(R.id.tab2_indicator) ;
-        indicator3 = (TextView)findViewById(R.id.tab3_indicator) ;
-        indicator4 = (TextView)findViewById(R.id.tab4_indicator) ;
-        indicator5 = (TextView)findViewById(R.id.tab5_indicator) ;
+        indicator1 = findViewById(R.id.tab1_indicator) ;
+        indicator2 = findViewById(R.id.tab2_indicator) ;
+        indicator3 = findViewById(R.id.tab3_indicator) ;
+        indicator4 = findViewById(R.id.tab4_indicator) ;
+        indicator5 = findViewById(R.id.tab5_indicator) ;
 
         indicator1.setOnClickListener(this);
         indicator2.setOnClickListener(this);
         indicator3.setOnClickListener(this);
         indicator4.setOnClickListener(this);
         indicator5.setOnClickListener(this);
-
+        cityArray = getResources().getStringArray(R.array.cityName);
        /*GPS 서비스 시작*/
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
         startService(intent);
@@ -141,12 +222,12 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     }
 
     private void setSpinnerSelection(){
-        String[] array = getResources().getStringArray(R.array.cityName);
         int cnt = 0;
 
-        for (String tmp : array) {
-            if (adminArea.contains(tmp)) {
+        for (String tmp : cityList) {
+            if (adminArea.equals(tmp)) {
                 spinner.setSelection(cnt);
+                position = cnt;
                 break;
             }
             cnt++;
@@ -170,8 +251,10 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         ImageView img = findViewById(R.id.atmosphere_environment_standard);
         if(view == indicator1){
             img.setImageResource(R.drawable.standard_fin_dust);
+            pollution = "PM25";
         }else if(view == indicator2) {
             img.setImageResource(R.drawable.standard_ultrafine_dust);
+            pollution = "PM10";
         }
         else if(view == indicator3) {
             img.setImageResource(R.drawable.standard_yellow_dust);
@@ -181,11 +264,15 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         }
         else if(view == indicator5) {
             img.setImageResource(R.drawable.standard_ozone);
+            pollution = "O3";
         }
+        ThreadParser parserThread = new ThreadParser();
+        parserThread.start();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        this.position = position;
         ImageView img = findViewById(R.id.map);
         switch(position){
             case 0:
@@ -290,8 +377,9 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
                 dataViewChungbuk.setVisibility(View.VISIBLE);
                 currDataView = dataViewChungbuk;
                 break;
-
         }
+        ThreadParser parserThread = new ThreadParser();
+        parserThread.start();
     }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) { }
