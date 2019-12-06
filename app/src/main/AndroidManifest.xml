@@ -16,7 +16,7 @@
                  
         android:theme="@style/AppTheme"
         android:networkSecurityConfig="@xml/network_security_config">
-      
+
         <activity android:name=".DataViewJeju"></activity>
         <activity android:name=".DataViewUlsan" />
         <activity android:name=".DataViewBusan" />
@@ -42,7 +42,8 @@
 
         <activity
             android:name=".ClothesRecommendationActivity"
-            android:theme="@style/MyTheme">
+            android:theme="@style/MyTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,7 +61,8 @@
         </activity>
         <activity
             android:name=".RealTimeWeather"
-            android:theme="@style/MyTheme">
+            android:theme="@style/MyTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,7 +73,8 @@
             android:name=".MainActivity"
             android:theme="@style/MyTheme"
             android:launchMode="singleTask"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
