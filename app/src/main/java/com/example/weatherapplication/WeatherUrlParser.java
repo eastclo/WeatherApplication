@@ -74,6 +74,7 @@ public class WeatherUrlParser {
         POPL = new ArrayList<String>();
         T3HL=new ArrayList<String>();
         SKYL=new ArrayList<String>();
+        PTYL=new ArrayList<String>();
 
         Calendar cc= Calendar.getInstance();
         cc.setTime(date);
@@ -98,6 +99,13 @@ public class WeatherUrlParser {
             } else
                 dayS--;
         }
+        String dayinput=Integer.toString(yearS);
+        if(monthS<10)
+            dayinput+="0";
+        dayinput+=Integer.toString(monthS);
+        if(dayS<10)
+            dayinput+="0";
+        dayinput+=Integer.toString(dayS);
         for(int i=1;i<=8;i++)
         {
             if(hourS<i*3) {
@@ -142,7 +150,7 @@ public class WeatherUrlParser {
         }
 
         daycheck=new SimpleDateFormat("yyyyMMdd").format(date);
-        String urlstr = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&base_date="+yearS+monthS+dayS+"&base_time="+"0500"+"&nx="+(int)x+"&ny="+(int)y+"&numOfRows=300&pageNo=1&_type=xml";
+        String urlstr = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&base_date="+dayinput+"&base_time="+"0500"+"&nx="+(int)x+"&ny="+(int)y+"&numOfRows=300&pageNo=1&_type=xml";
 
         System.out.println(urlstr);
         try {
@@ -183,7 +191,6 @@ public class WeatherUrlParser {
         XmlPullParserFactory parserCreator=null;
         XmlPullParser parser=null;
         InputStream is=null;
-
         try {
             parserCreator = XmlPullParserFactory.newInstance();
             parser = parserCreator.newPullParser();
@@ -386,14 +393,15 @@ public class WeatherUrlParser {
                 }
                 parserEvent = parser.next();
             }
+            is.close();
         }catch(Exception e){
             e.printStackTrace();
         }
+        System.out.println("1day : "+taMAX1day + " " + taMIN1day + " "+rnSt1day + " " + sky1day);
+        System.out.println("2day : "+taMAX2day + " " + taMIN2day + " "+rnSt2day + " " + sky2day);
         if(TMN.equals(""))
             TMN= Integer.toString(Collections.min(tempTM));
         if(TMX.equals(""))
             TMX=Integer.toString(Collections.max(tempTM));
-        System.out.println("1day : "+taMAX1day + " " + taMIN1day + " "+rnSt1day + " " + sky1day);
-        System.out.println("2day : "+taMAX2day + " " + taMIN2day + " "+rnSt2day + " " + sky2day);
     }
 }
