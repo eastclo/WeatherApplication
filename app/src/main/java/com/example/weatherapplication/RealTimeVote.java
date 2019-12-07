@@ -4,17 +4,28 @@ public class RealTimeVote {
     private int yes;
     private int no;
 
+    public RealTimeVote() {
+    }
 
-    public RealTimeVote (int yes, int no) {
+    public RealTimeVote(String adminArea, String subLocality, int yes, int no) {
         this.yes = yes;
         this.no = no;
     }
 
-    public  int getYes() { return yes; }
+    public int getYes() {
+        return this.yes;
+    }
 
-    public  void setYes(int yes) { this.yes = yes; }
+    public void setYes(int yes) {
+        this.yes = yes;
+    }
 
-    public int getNo() { return no; }
+    public int getNo() {
+        return this.no;
+    }
 
-    public void setNo(int no) { this.no = no; }
+    public void setNo(int no) {
+        this.no = no;
+    }
+
 }
