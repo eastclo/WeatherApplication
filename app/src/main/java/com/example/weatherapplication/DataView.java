@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface DataView {
     //data set
-    String fineDust = "FINE_DUST", ultraFineDust = "ULTRA_FINE_DUST", ozone = "OZONE";
+    String fineDust = "PM10", ultraFineDust = "PM25", ozone = "O3", yellowDust = "YELLOW_DUST", ultraVioletRays = "ULTRA_VIOLET_RAYS";
 
     void setBackground(TextView view, String dataSet, String data);
     Drawable setColor(double blue, double green, double orange, String data);
