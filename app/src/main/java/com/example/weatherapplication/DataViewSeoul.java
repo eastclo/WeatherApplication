@@ -48,7 +48,7 @@ public class DataViewSeoul extends RelativeLayout implements DataView {
 
     /*finedust: ~30 좋음, ~80 보통, ~150 나쁨
      * ultrafinedust: ~15 좋음, ~35 보통, ~75 나쁨
-     *  yellowdust: ~0.030 좋음, ~0.090 보통, ~0.15 나쁨
+     *  ozone: ~0.030 좋음, ~0.090 보통, ~0.15 나쁨
      * * */
     public void setBackground(TextView view, String dataSet, String data){
         Drawable drawable = null;

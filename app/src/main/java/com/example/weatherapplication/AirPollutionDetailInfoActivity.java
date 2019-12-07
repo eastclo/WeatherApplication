@@ -56,8 +56,8 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     //데이터 파싱을 위한 변수 선언
     final String[] cityList = {"전체","강원도","경기도","경상남도","경상북도","광주광역시","대구광역시","대전광역시","부산광역시","서울특별시","울산광역시","인천광역시","전라남도","전라북도","제주특별자치도","충청남도","충청북도"};
     String[] cityArray;
-    String pollution = "PM25";   //PM10, PM25, O3 등
-    int position = 1;
+    String pollution = "PM10";   //PM10, PM25, O3 등
+    int position = 0;
 
     Handler mhandler = new Handler();
     ArrayList<Pair<String, String>> dataList;
@@ -67,10 +67,21 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         @Override
         public void run() {
             AirQualityDataParser parser = new AirQualityDataParser(cityArray[position], pollution);
-            dataList = parser.sggParsing();
+            if(position != 0) {
+                dataList = parser.sggParsing();
+            } else {
+                if(pollution.equals(DataView.yellowDust))
+                    ;
+                else if(pollution.equals(DataView.ultraVioletRays))
+                    dataList = parser.ultraVioletRaysUrlParsing();
+                else
+                    dataList = parser.sidoUrlParsing();
+            }
+
             switch (position) {
                 case 0:
                     settingView = new DataViewKorea(getApplicationContext(), currDataView);
+                    break;
                 case 1:
                     settingView = new DataViewGangwon(getApplicationContext(), currDataView);
                     break;
@@ -124,8 +135,8 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
             mhandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    settingView.setData(dataList, DataView.fineDust);
-                }
+                        settingView.setData(dataList, pollution);
+                    }
             });
         }
     };
@@ -251,23 +262,25 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         ImageView img = findViewById(R.id.atmosphere_environment_standard);
         if(view == indicator1){
             img.setImageResource(R.drawable.standard_fin_dust);
-            pollution = "PM25";
+            pollution = "PM10";
         }else if(view == indicator2) {
             img.setImageResource(R.drawable.standard_ultrafine_dust);
-            pollution = "PM10";
+            pollution = "PM25";
         }
         else if(view == indicator3) {
             img.setImageResource(R.drawable.standard_yellow_dust);
+            pollution = DataView.yellowDust;
         }
         else if(view == indicator4) {
             img.setImageResource(R.drawable.standard_ultraviolet_rays);
+            pollution = DataView.ultraVioletRays;
         }
         else if(view == indicator5) {
             img.setImageResource(R.drawable.standard_ozone);
             pollution = "O3";
         }
         ThreadParser parserThread = new ThreadParser();
-        parserThread.start();
+        parserThread.start();   //탭 클릭 될 때 마다 파싱
     }
 
     @Override
@@ -379,7 +392,7 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
                 break;
         }
         ThreadParser parserThread = new ThreadParser();
-        parserThread.start();
+        parserThread.start();   //스피너 선택 될 때 마다 파싱
     }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) { }
