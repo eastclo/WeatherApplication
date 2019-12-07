@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="PUSH알림 수치 설정">
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/rain"
+            app:entryValues="@array/rainvalue"
+            app:key="rain"
+            app:title="강수확률"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/dirtarray"
+            app:entryValues="@array/dirtarray"
+            app:key="dirt"
+            app:title="미세먼지"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,35 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="PUSH알림">
+        <SwitchPreferenceCompat
+            app:key="pushcloth"
+            app:title="오늘 입을 옷을 알려줄래요."
+            app:summaryOn="오늘 입을 옷 투표 PUSH알림을 받습니다."
+            app:summaryOff="오늘 입을 옷 투표 PUSH알림을 받지 않습니다."/>
+        <SwitchPreferenceCompat
+            app:key="pushlocation"
+            app:title="우리 지역 날씨를 알려줄래요."
+            app:summaryOn="지역 날씨 투표 PUSH알림을 받습니다."
+            app:summaryOff="지역 날씨 투표 PUSH알림을 받지 않습니다."/>
+        <SwitchPreferenceCompat
+            app:key="pushtoday"
+            app:title="오늘 날씨가 어떤지 듣고싶어요."
+            app:summaryOn="주변 지역 날씨 PUSH알림을 받습니다."
+            app:summaryOff="주변 지역 날씨 PUSH알림을 받지 않습니다."/>
+    </PreferenceCategory>
+    <PreferenceCategory>
+        <PreferenceScreen
+            app:key="push_setting"
+            app:title="날씨 경고 PUSH 설정"
+            >
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            app:key="info"
+            app:title="앱 정보"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

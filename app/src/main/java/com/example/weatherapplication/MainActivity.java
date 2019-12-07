@@ -6,6 +6,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView nowTemp,nowRain,nowMax,nowMin,nowSky;
     ImageView nowIcon;
+    ImageView settingBtn;
+    Button airPollutionBtn;
 
     LinearLayout mainFrame;
 
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     final String[] cityCode = {"11B10101","11B20201","11H20201","11H20101","11H10701","11F20503","11C20401","11B20701","11H20301","11H10501","11F20503","11F10201","11C20404","11C10301","11D20501"};
     final String[] weatherCode = {"11B00000","11B00000","11H20000","11H20000","11H10000","11F20000","11C20000","11B00000","11H20000","11H10000","11F20000","11F10000","11C20000","11C10000","11D20000"};
 
-
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         float initialX=0;
         float pointCurX=0;
@@ -72,17 +76,15 @@ public class MainActivity extends AppCompatActivity {
                     intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
                 }
                 else if(pointCurX- initialX< -300){
                     intent =new Intent(this, AirPollutionDetailInfoActivity.class);
                     intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                    finish();
                 }
         }
-        return true;
+        return super.onTouchEvent(event);
     }
 
 
@@ -104,7 +106,26 @@ public class MainActivity extends AppCompatActivity {
         nowMin=(TextView)findViewById(R.id.mintempin);
         nowSky=(TextView)findViewById(R.id.statenow);
         nowIcon=(ImageView)findViewById(R.id.stateicon);
+        settingBtn=(ImageView)findViewById(R.id.setting);
+        settingBtn.setOnClickListener(new View.OnClickListener(){
 
+            Intent intent;
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+        airPollutionBtn=(Button)findViewById(R.id.airpollution);
+        airPollutionBtn.setOnClickListener(new View.OnClickListener(){
+
+            Intent intent;
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(getApplicationContext(), AirPollutionDetailInfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -130,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         if(adminArea.equals(cityList[i]))
                         {
-                            subLocality=addresses.get(0).getThoroughfare();
+                            subLocality=addresses.get(0).getSubLocality();
                             break;
                         }
                     }
@@ -216,11 +237,18 @@ public class MainActivity extends AppCompatActivity {
         WeatherWeekUrlParser weekparsing;
         String citycode;
         String weathercode;
+
+        ProgressDialog asyncDialog;
         NetworkTask(String url){
             this.url = url;
         }
         @Override
         protected void onPreExecute(){
+            asyncDialog = new ProgressDialog(MainActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중입니다...");
+
+            asyncDialog.show();
             super.onPreExecute();
         }
         @Override
@@ -243,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
             changeNow(parsing.POP,parsing.SKY,parsing.PTY,parsing.T3H,parsing.TMX,parsing.TMN);
             changeAfter(parsing.POPL,parsing.T3HL,parsing.SKYL,parsing.timeList,parsing.PTYL);
             changeWeek(parsing,weekparsing);
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
 
         }
 

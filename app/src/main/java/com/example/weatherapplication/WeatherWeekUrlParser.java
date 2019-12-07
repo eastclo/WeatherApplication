@@ -31,9 +31,17 @@ public class WeatherWeekUrlParser {
         wfkor=new ArrayList<String>();
         dayNum=new ArrayList<String>();
 
+        System.out.println("here");
         long now = System.currentTimeMillis();
         Date date = new Date(now);
-        SimpleDateFormat year = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+        SimpleDateFormat month = new SimpleDateFormat("MM");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        SimpleDateFormat hour = new SimpleDateFormat("HH");
+        int yearS = Integer.parseInt(year.format(date));
+        int monthS=Integer.parseInt(month.format(date));
+        int dayS = Integer.parseInt(day.format(date));
+        int hourS = Integer.parseInt(hour.format(date));
         Calendar cal= Calendar.getInstance();
         cal.setTime(date);
         int dayN=cal.get(Calendar.DAY_OF_WEEK);
@@ -50,17 +58,37 @@ public class WeatherWeekUrlParser {
                 case 6:dayNum.add("금"); break;
                 case 7:dayNum.add("토"); break;
             }
-
         }
+        if(hourS<6) {
+            if (dayS < 1) {
+                if (monthS < 1) {
+                    yearS--;
+                    monthS = 12;
+                    dayS = 31;
+                } else {
+                    monthS--;
+                    if (monthS == 1 || monthS == 3 || monthS == 5 || monthS == 7 || monthS == 8 || monthS == 10) dayS = 31;
+                    else
+                        dayS = 30;
+                }
+            } else
+                dayS--;
+        }
+        String dayinput=Integer.toString(yearS);
+        if(monthS<10)
+            dayinput+="0";
+        dayinput+=Integer.toString(monthS);
+        if(dayS<10)
+            dayinput+="0";
+        dayinput+=Integer.toString(dayS);
 
-        urlstr1 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?" + "serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&regId="+citycode+"&tmFc="+year.format(date)+"0600&pageNo=1&numOfRows=10";
 
-        urlstr2 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?" + "serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&regId="+weathercode+"&tmFc="+year.format(date)+"0600&pageNo=1&numOfRows=10";
+        urlstr1 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?" + "serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&regId="+citycode+"&tmFc="+dayinput+"0600&pageNo=1&numOfRows=10";
 
+        urlstr2 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?" + "serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&regId="+weathercode+"&tmFc="+dayinput+"0600&pageNo=1&numOfRows=10";
 
         System.out.println(urlstr1);
         System.out.println(urlstr2);
-
 
         try {
             url = new URL(urlstr1);
@@ -179,6 +207,7 @@ public class WeatherWeekUrlParser {
                 }
                 parserEvent=parser.next();
             }
+            is.close();
         }catch(Exception e){
             e.printStackTrace();
         }
