@@ -31,7 +31,6 @@ public class WeatherWeekUrlParser {
         wfkor=new ArrayList<String>();
         dayNum=new ArrayList<String>();
 
-        System.out.println("here");
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
@@ -86,9 +85,6 @@ public class WeatherWeekUrlParser {
         urlstr1 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleTemperature?" + "serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&regId="+citycode+"&tmFc="+dayinput+"0600&pageNo=1&numOfRows=10";
 
         urlstr2 = "http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleLandWeather?" + "serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&regId="+weathercode+"&tmFc="+dayinput+"0600&pageNo=1&numOfRows=10";
-
-        System.out.println(urlstr1);
-        System.out.println(urlstr2);
 
         try {
             url = new URL(urlstr1);
@@ -211,10 +207,5 @@ public class WeatherWeekUrlParser {
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("taMAX : "+taMAX);
-        System.out.println("taMIN : "+taMIN);
-        System.out.println("rnSt : "+rnSt);
-        System.out.println("wfKor : "+wfkor);
-        System.out.println("day : "+dayNum);
     }
 }
