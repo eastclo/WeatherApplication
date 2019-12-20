@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     Boolean scrollswt=false;
     int SET_X=300;
 
+    Context mainC;
+
     LinearLayout mainFrame;
 
     final String[] cityList = {"서울특별시","인천광역시","부산광역시","울산광역시","대구광역시","광주광역시","대전광역시","경기도","경상남도","경상북도","전라남도","전라북도","충청남도","충청북도","강원도"};
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private ServiceConnection mConnection = new ServiceConnection(){
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            System.out.println("connect");
+
             gpsService=new GpsService();
             gpsService=((GpsService.LocalBinder)iBinder).getCountService();
 
@@ -98,18 +100,9 @@ public class MainActivity extends AppCompatActivity {
 
                 gridgps = gridgps.convertGrid(latitude,longitude);
 
-                ProgressDialog asyncDialog;
-
-                asyncDialog = new ProgressDialog(MainActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
-                asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                asyncDialog.setMessage("로딩중입니다...");
-
-                asyncDialog.show();
 
                 NetworkTask networkTask = new NetworkTask(null);
                 networkTask.execute();
-
-                asyncDialog.dismiss();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -128,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        System.out.println(initialX + " " + pointCurX);
+
         if(!isPermission) {
             callPermission();
         }
@@ -143,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
         nowIcon=(ImageView)findViewById(R.id.stateicon);
         settingBtn=(ImageView)findViewById(R.id.setting);
         mainframe=(MainBackView)findViewById(R.id.mainFrame);
+        mainC=this;
+
 
         HorizontalScrollView hs = (HorizontalScrollView)findViewById(R.id.scroll);
         ScrollView sv = (ScrollView)findViewById(R.id.scroll2);
@@ -181,18 +178,18 @@ public class MainActivity extends AppCompatActivity {
         mainframe.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent){
-
                 switch(motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
-                        initialX = motionEvent.getX();
-                        break;
+                        initialX = motionEvent.getRawX();
+                        return true;
                     case MotionEvent.ACTION_UP:
-                        pointCurX = motionEvent.getX();
+                        pointCurX = motionEvent.getRawX();
+                        System.out.println(initialX+" "+pointCurX);
                         Intent intent;
                         //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
                         if(scrollswt)
-                            SET_X=900;
+                            SET_X=500;
                         else
                             SET_X=400;
                         scrollswt=false;
@@ -216,22 +213,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        settingBtn.setOnClickListener(new View.OnClickListener(){
+        settingBtn.setOnTouchListener(new View.OnTouchListener(){
             Intent intent;
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                initialX = motionEvent.getRawX();
+                pointCurX = motionEvent.getRawX();
                 intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             }
         });
         airPollutionBtn=(Button)findViewById(R.id.airpollution);
-        airPollutionBtn.setOnClickListener(new View.OnClickListener(){
 
+        airPollutionBtn.setOnTouchListener(new View.OnTouchListener(){
             Intent intent;
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                initialX = motionEvent.getRawX();
+                pointCurX = motionEvent.getRawX();
                 intent = new Intent(getApplicationContext(), AirPollutionDetailInfoActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                return true;
             }
         });
 
@@ -271,18 +276,8 @@ public class MainActivity extends AppCompatActivity {
 
                     gridgps = gridgps.convertGrid(latitude,longitude);
 
-                    ProgressDialog asyncDialog;
-
-                    asyncDialog = new ProgressDialog(MainActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
-                    asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    asyncDialog.setMessage("로딩중입니다...");
-
-                    //asyncDialog.show();
-
                     NetworkTask networkTask = new NetworkTask(null);
                     networkTask.execute();
-
-                    //asyncDialog.dismiss();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -296,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
+
     }
 
     @Override
@@ -373,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
         WeatherWeekUrlParser weekparsing;
         String citycode;
         String weathercode;
+        ProgressDialog asyncDialog;
 
         NetworkTask(String url){
             this.url = url;
@@ -380,6 +377,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+
+
+            asyncDialog = new ProgressDialog(mainC,android.R.style.Theme_DeviceDefault_Light_Dialog);
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중입니다...");
+
+            asyncDialog.show();
         }
         @Override
         protected String doInBackground(Void... params){
@@ -402,6 +406,8 @@ public class MainActivity extends AppCompatActivity {
             changeAfter(parsing.POPL,parsing.T3HL,parsing.SKYL,parsing.timeList,parsing.PTYL);
             changeWeek(parsing,weekparsing);
             super.onPostExecute(result);
+
+            asyncDialog.dismiss();
 
         }
 
