@@ -1,18 +1,11 @@
 package com.example.weatherapplication;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static androidx.core.content.ContextCompat.startActivity;
-
 
 public class MainBackView extends LinearLayout {
 
