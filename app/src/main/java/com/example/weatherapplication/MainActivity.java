@@ -6,18 +6,20 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,12 +33,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import android.view.View.OnTouchListener;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class MainActivity extends AppCompatActivity {
-    GpsUsing gps;
+
+    GpsService gpsService = null;
+
     public LatXLonY gridgps;
 
     LocalBroadcastManager mLocalBroadcastManager;
@@ -67,15 +68,65 @@ public class MainActivity extends AppCompatActivity {
     final String[] cityCode = {"11B10101","11B20201","11H20201","11H20101","11H10701","11F20503","11C20401","11B20701","11H20301","11H10501","11F20503","11F10201","11C20404","11C10301","11D20501"};
     final String[] weatherCode = {"11B00000","11B00000","11H20000","11H20000","11H10000","11F20000","11C20000","11B00000","11H20000","11H10000","11F20000","11F10000","11C20000","11C10000","11D20000"};
 
+    private ServiceConnection mConnection = new ServiceConnection(){
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            System.out.println("connect");
+            gpsService=new GpsService();
+            gpsService=((GpsService.LocalBinder)iBinder).getCountService();
+
+            double latitude = gpsService.getLocation().getLatitude();
+            double longitude = gpsService.getLocation().getLongitude();
+
+            Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
+            try {
+                addresses = coder.getFromLocation(latitude, longitude, 5); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
+                adminArea = addresses.get(0).getAdminArea();
+                subLocality = addresses.get(0).getLocality();
+                for(int i=0;i<7;i++)
+                {
+                    if(adminArea.equals(cityList[i]))
+                    {
+                        subLocality=addresses.get(0).getSubLocality();
+                        break;
+                    }
+                }
+                adminAreaView.setText(adminArea);
+                subLocalityView.setText((subLocality));
+
+                gridgps=new LatXLonY();
+
+                gridgps = gridgps.convertGrid(latitude,longitude);
+
+                ProgressDialog asyncDialog;
+
+                asyncDialog = new ProgressDialog(MainActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog);
+                asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                asyncDialog.setMessage("로딩중입니다...");
+
+                asyncDialog.show();
+
+                NetworkTask networkTask = new NetworkTask(null);
+                networkTask.execute();
+
+                asyncDialog.dismiss();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        System.out.println("onCreate");
-        System.out.println(adminArea);
 
         if(!isPermission) {
             callPermission();
@@ -166,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         settingBtn.setOnClickListener(new View.OnClickListener(){
-
             Intent intent;
             @Override
             public void onClick(View view) {
@@ -184,21 +234,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-
-
-    @Override
-    public void onStart(){
-        super.onStart();
-
 
         /*GPS 서비스 시작*/
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
         startService(intent);
 
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        Intent bIntent = new Intent();
+        ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
+        bIntent.setComponent(componentName);
+        bindService(bIntent,mConnection,0);
 
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -245,12 +291,20 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+
+
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
         System.out.println("onResume");
         mLocalBroadcastManager.registerReceiver(mReceiver, new IntentFilter(GpsService.ACTION_LOCATION_BROADCAST));
+
     }
 
     @Override
@@ -262,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        unbindService(mConnection);
         super.onDestroy();
     }
 
