@@ -188,11 +188,10 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case MotionEvent.ACTION_UP:
                             pointCurX = motionEvent.getRawX();
-                            System.out.println(initialX+" "+pointCurX);
                             Intent intent;
                             //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
                             if(scrollswt)
-                                SET_X=500;
+                                SET_X=800;
                             else
                                 SET_X=400;
                             scrollswt=false;
@@ -222,24 +221,29 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     initialX = motionEvent.getRawX();
                     pointCurX = motionEvent.getRawX();
-                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    return true;
+                    System.out.println(motionEvent.getAction());
+                    if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
+                        intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    return false;
                 }
             });
-            airPollutionBtn=(Button)findViewById(R.id.airpollution);
 
+            airPollutionBtn=(Button)findViewById(R.id.airpollution);
             airPollutionBtn.setOnTouchListener(new View.OnTouchListener(){
                 Intent intent;
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     initialX = motionEvent.getRawX();
                     pointCurX = motionEvent.getRawX();
-                    intent = new Intent(getApplicationContext(), AirPollutionDetailInfoActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    return true;
+                    if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
+                        intent = new Intent(getApplicationContext(), AirPollutionDetailInfoActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    return false;
                 }
             });
 
@@ -300,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("onResume");
         mLocalBroadcastManager.registerReceiver(mReceiver, new IntentFilter(GpsService.ACTION_LOCATION_BROADCAST));
 
     }
@@ -346,7 +349,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_ACCESS_FINE_LOCATION);
-            System.out.println("fine location");
 
         }
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
@@ -356,7 +358,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     PERMISSIONS_ACCESS_COARSE_LOCATION);
-            System.out.println("coarse location");
 
         } */else {
             isPermission = true;
@@ -377,13 +378,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-
-
-            asyncDialog = new ProgressDialog(mainC,android.R.style.Theme_DeviceDefault_Light_Dialog);
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중입니다...");
-
-            asyncDialog.show();
         }
         @Override
         protected String doInBackground(Void... params){
@@ -406,8 +400,6 @@ public class MainActivity extends AppCompatActivity {
             changeAfter(parsing.POPL,parsing.T3HL,parsing.SKYL,parsing.timeList,parsing.PTYL);
             changeWeek(parsing,weekparsing);
             super.onPostExecute(result);
-
-            asyncDialog.dismiss();
 
         }
 
