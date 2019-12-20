@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout mainFrame;
 
+    private final int PERMISSIONS_ACCESS_FINE_LOCATION = 1000;
+    private final int PERMISSIONS_ACCESS_COARSE_LOCATION = 1001;
+    private boolean isAccessFineLocation = false;
+    private boolean isAccessCoarseLocation = false;
+    private boolean isPermission = false;
+
     final String[] cityList = {"서울특별시","인천광역시","부산광역시","울산광역시","대구광역시","광주광역시","대전광역시","경기도","경상남도","경상북도","전라남도","전라북도","충청남도","충청북도","강원도"};
     final String[] cityCode = {"11B10101","11B20201","11H20201","11H20101","11H10701","11F20503","11C20401","11B20701","11H20301","11H10501","11F20503","11F10201","11C20404","11C10301","11D20501"};
     final String[] weatherCode = {"11B00000","11B00000","11H20000","11H20000","11H10000","11F20000","11C20000","11B00000","11H20000","11H10000","11F20000","11F10000","11C20000","11C10000","11D20000"};
@@ -121,171 +127,168 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println(initialX + " " + pointCurX);
+        callPermission();
+        if(isPermission)
+        {
+            adminAreaView=(TextView)findViewById(R.id.cityName);
+            subLocalityView=(TextView)findViewById(R.id.localityName);
 
-        if(!isPermission) {
-            callPermission();
-        }
-
-        adminAreaView=(TextView)findViewById(R.id.cityName);
-        subLocalityView=(TextView)findViewById(R.id.localityName);
-
-        nowTemp=(TextView)findViewById(R.id.tempnowin);
-        nowRain=(TextView)findViewById(R.id.rainperin);
-        nowMax=(TextView)findViewById(R.id.maxtempin);
-        nowMin=(TextView)findViewById(R.id.mintempin);
-        nowSky=(TextView)findViewById(R.id.statenow);
-        nowIcon=(ImageView)findViewById(R.id.stateicon);
-        settingBtn=(ImageView)findViewById(R.id.setting);
-        mainframe=(MainBackView)findViewById(R.id.mainFrame);
-        mainC=this;
+            nowTemp=(TextView)findViewById(R.id.tempnowin);
+            nowRain=(TextView)findViewById(R.id.rainperin);
+            nowMax=(TextView)findViewById(R.id.maxtempin);
+            nowMin=(TextView)findViewById(R.id.mintempin);
+            nowSky=(TextView)findViewById(R.id.statenow);
+            nowIcon=(ImageView)findViewById(R.id.stateicon);
+            settingBtn=(ImageView)findViewById(R.id.setting);
+            mainframe=(MainBackView)findViewById(R.id.mainFrame);
+            mainC=this;
 
 
-        HorizontalScrollView hs = (HorizontalScrollView)findViewById(R.id.scroll);
-        ScrollView sv = (ScrollView)findViewById(R.id.scroll2);
+            HorizontalScrollView hs = (HorizontalScrollView)findViewById(R.id.scroll);
+            ScrollView sv = (ScrollView)findViewById(R.id.scroll2);
 
-        hs.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
-                        initialX = motionEvent.getX();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        pointCurX = motionEvent.getX();
-                        scrollswt=true;
-                }
-                return false;
-            }
-        });
-        sv.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
-                        initialX = motionEvent.getX();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        pointCurX = motionEvent.getX();
-                        scrollswt=true;
-                }
-                return false;
-            }
-        });
-
-        mainframe.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent){
-                switch(motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
-                        initialX = motionEvent.getRawX();
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        pointCurX = motionEvent.getRawX();
-                        System.out.println(initialX+" "+pointCurX);
-                        Intent intent;
-                        //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
-                        if(scrollswt)
-                            SET_X=500;
-                        else
-                            SET_X=400;
-                        scrollswt=false;
-                        if(pointCurX- initialX> SET_X){
-                            intent = new Intent(getApplicationContext(), ClothesRecommendationActivity.class);
-                            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                            finish();
-                            return true;
-                        }
-                        else if(pointCurX- initialX< 0-SET_X){
-                            intent =new Intent(getApplicationContext(), RealTimeWeather.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            finish();
-                            return true;
-                        }
-                }
-                return false;
-            }
-        });
-
-        settingBtn.setOnTouchListener(new View.OnTouchListener(){
-            Intent intent;
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                initialX = motionEvent.getRawX();
-                pointCurX = motionEvent.getRawX();
-                intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            }
-        });
-        airPollutionBtn=(Button)findViewById(R.id.airpollution);
-
-        airPollutionBtn.setOnTouchListener(new View.OnTouchListener(){
-            Intent intent;
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                initialX = motionEvent.getRawX();
-                pointCurX = motionEvent.getRawX();
-                intent = new Intent(getApplicationContext(), AirPollutionDetailInfoActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            }
-        });
-
-        /*GPS 서비스 시작*/
-        Intent intent = new Intent(getApplicationContext(), GpsService.class);
-        startService(intent);
-
-        Intent bIntent = new Intent();
-        ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
-        bIntent.setComponent(componentName);
-        bindService(bIntent,mConnection,0);
-
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                double latitude = intent.getDoubleExtra(GpsService.EXTRA_LATITUDE,0);
-                double longitude = intent.getDoubleExtra(GpsService.EXTRA_LONGITUDE,0);
-
-                Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
-                try {
-                    addresses = coder.getFromLocation(latitude, longitude, 5); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
-                    adminArea = addresses.get(0).getAdminArea();
-                    subLocality = addresses.get(0).getLocality();
-                    for(int i=0;i<7;i++)
-                    {
-                        if(adminArea.equals(cityList[i]))
-                        {
-                            subLocality=addresses.get(0).getSubLocality();
+            hs.setOnTouchListener(new View.OnTouchListener(){
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    switch(motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
+                            initialX = motionEvent.getX();
                             break;
-                        }
+                        case MotionEvent.ACTION_UP:
+                            pointCurX = motionEvent.getX();
+                            scrollswt=true;
                     }
-                    adminAreaView.setText(adminArea);
-                    subLocalityView.setText((subLocality));
-
-                    gridgps=new LatXLonY();
-
-                    gridgps = gridgps.convertGrid(latitude,longitude);
-
-                    NetworkTask networkTask = new NetworkTask(null);
-                    networkTask.execute();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    return false;
                 }
-            }
-        };
-    }
+            });
+            sv.setOnTouchListener(new View.OnTouchListener(){
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    switch(motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
+                            initialX = motionEvent.getX();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            pointCurX = motionEvent.getX();
+                            scrollswt=true;
+                    }
+                    return false;
+                }
+            });
 
+            mainframe.setOnTouchListener(new View.OnTouchListener(){
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent){
+                    switch(motionEvent.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
+                            initialX = motionEvent.getRawX();
+                            return true;
+                        case MotionEvent.ACTION_UP:
+                            pointCurX = motionEvent.getRawX();
+                            System.out.println(initialX+" "+pointCurX);
+                            Intent intent;
+                            //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
+                            if(scrollswt)
+                                SET_X=500;
+                            else
+                                SET_X=400;
+                            scrollswt=false;
+                            if(pointCurX- initialX> SET_X){
+                                intent = new Intent(getApplicationContext(), ClothesRecommendationActivity.class);
+                                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                                finish();
+                                return true;
+                            }
+                            else if(pointCurX- initialX< 0-SET_X){
+                                intent =new Intent(getApplicationContext(), RealTimeWeather.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                finish();
+                                return true;
+                            }
+                    }
+                    return false;
+                }
+            });
+
+            settingBtn.setOnTouchListener(new View.OnTouchListener(){
+                Intent intent;
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    initialX = motionEvent.getRawX();
+                    pointCurX = motionEvent.getRawX();
+                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                }
+            });
+            airPollutionBtn=(Button)findViewById(R.id.airpollution);
+
+            airPollutionBtn.setOnTouchListener(new View.OnTouchListener(){
+                Intent intent;
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    initialX = motionEvent.getRawX();
+                    pointCurX = motionEvent.getRawX();
+                    intent = new Intent(getApplicationContext(), AirPollutionDetailInfoActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                }
+            });
+
+            /*GPS 서비스 시작*/
+            Intent intent = new Intent(getApplicationContext(), GpsService.class);
+            startService(intent);
+
+            Intent bIntent = new Intent();
+            ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
+            bIntent.setComponent(componentName);
+            bindService(bIntent,mConnection,0);
+
+            mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+            mReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    double latitude = intent.getDoubleExtra(GpsService.EXTRA_LATITUDE,0);
+                    double longitude = intent.getDoubleExtra(GpsService.EXTRA_LONGITUDE,0);
+
+                    Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
+                    try {
+                        addresses = coder.getFromLocation(latitude, longitude, 5); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
+                        adminArea = addresses.get(0).getAdminArea();
+                        subLocality = addresses.get(0).getLocality();
+                        for(int i=0;i<7;i++)
+                        {
+                            if(adminArea.equals(cityList[i]))
+                            {
+                                subLocality=addresses.get(0).getSubLocality();
+                                break;
+                            }
+                        }
+                        adminAreaView.setText(adminArea);
+                        subLocalityView.setText((subLocality));
+
+                        gridgps=new LatXLonY();
+
+                        gridgps = gridgps.convertGrid(latitude,longitude);
+
+                        NetworkTask networkTask = new NetworkTask(null);
+                        networkTask.execute();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+        }
+    }
 
 
     @Override
@@ -297,7 +300,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         System.out.println("onResume");
         mLocalBroadcastManager.registerReceiver(mReceiver, new IntentFilter(GpsService.ACTION_LOCATION_BROADCAST));
 
@@ -306,8 +308,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        mLocalBroadcastManager.unregisterReceiver(mReceiver);
+        //mLocalBroadcastManager.unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -316,29 +317,24 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private final int PERMISSIONS_ACCESS_FINE_LOCATION = 1000;
-    private final int PERMISSIONS_ACCESS_COARSE_LOCATION = 1001;
-    private boolean isAccessFineLocation = false;
-    private boolean isAccessCoarseLocation = false;
-    private boolean isPermission = false;
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         if (requestCode == PERMISSIONS_ACCESS_FINE_LOCATION
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
             isAccessFineLocation = true;
-
-        } else if (requestCode == PERMISSIONS_ACCESS_COARSE_LOCATION
+            isPermission=true;
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+        /*if (requestCode == PERMISSIONS_ACCESS_COARSE_LOCATION
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
             isAccessCoarseLocation = true;
         }
 
         if (isAccessFineLocation && isAccessCoarseLocation) {
             isPermission = true;
-        }
+        }*/
     }
 
     private void callPermission() {
@@ -350,15 +346,19 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_ACCESS_FINE_LOCATION);
+            System.out.println("fine location");
 
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        }
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED){
 
             requestPermissions(
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     PERMISSIONS_ACCESS_COARSE_LOCATION);
-        } else {
+            System.out.println("coarse location");
+
+        } */else {
             isPermission = true;
         }
     }

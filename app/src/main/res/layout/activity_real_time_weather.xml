@@ -46,7 +46,8 @@
                 android:layout_marginRight="10dp"
                 android:adjustViewBounds="true"
                 android:clickable="true"
-                android:src="@drawable/setting_icon" />
+                android:src="@drawable/setting_icon"
+                android:background="?attr/selectableItemBackground"/>
         </RelativeLayout>
 
        <RelativeLayout
