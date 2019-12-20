@@ -387,7 +387,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                // 남자 옷 1에대한 막대
+                // 남자 옷 1 막대
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("male").document("cloth2");
@@ -395,7 +395,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                // 남자 옷 2에대한 막대
+                // 남자 옷 2 막대
 
             }
         });
@@ -404,7 +404,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                // 여자 옷 1에대한 막대
+                // 여자 옷 1 막대
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("female").document("cloth2");
@@ -412,7 +412,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                // 여자 옷 2에대한 막대
+                // 여자 옷 2 막대
             }
         });
     }
