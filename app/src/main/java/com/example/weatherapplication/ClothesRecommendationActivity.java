@@ -96,6 +96,8 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
     int manPaddingTotal;
     int womanCoatTotal;
     int womanPaddingTotal;
+    TextView manResultRate;
+    TextView womanResultRate;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -116,6 +118,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
 
             adminAreaView.setText(adminArea);
             subLoocalityView.setText((subLocality));
+            getTotal();
         }
 
         @Override
@@ -165,6 +168,8 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         womanPaddingWellSpace = findViewById(R.id.woman_padding_well_space);
         womanPaddingCold = findViewById(R.id.woman_padding_cold);
         womanPaddingColdSpace = findViewById(R.id.woman_padding_cold_space);
+        manResultRate = findViewById(R.id.man_result_rate);
+        womanResultRate = findViewById(R.id.woman_result_rate);
 
         //Gps서비스 시작
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
@@ -451,6 +456,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 setDataBar(manCoatTotal, total.getFeeling1(), manCoatHot, manCoatHotSpace);
                 setDataBar(manCoatTotal, total.getFeeling2(), manCoatWell, manCoatWellSpace);
                 setDataBar(manCoatTotal, total.getFeeling3(), manCoatCold, manCoatColdSpace);
+                setDataResult(manResultRate, manCoatTotal, manPaddingTotal);
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("male").document("cloth2");
@@ -463,6 +469,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 setDataBar(manPaddingTotal, total.getFeeling1(), manPaddingHot, manPaddingHotSpace);
                 setDataBar(manPaddingTotal, total.getFeeling2(), manPaddingWell, manPaddingWellSpace);
                 setDataBar(manPaddingTotal, total.getFeeling3(), manPaddingCold, manPaddingColdSpace);
+                setDataResult(manResultRate, manCoatTotal, manPaddingTotal);
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("female").document("cloth1");
@@ -475,6 +482,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 setDataBar(womanCoatTotal, total.getFeeling1(), womanCoatHot, womanCoatHotSpace);
                 setDataBar(womanCoatTotal, total.getFeeling2(), womanCoatWell, womanCoatWellSpace);
                 setDataBar(womanCoatTotal, total.getFeeling3(), womanCoatCold, womanCoatColdSpace);
+                setDataResult(womanResultRate, womanCoatTotal, womanPaddingTotal);
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("female").document("cloth2");
@@ -487,6 +495,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 setDataBar(womanPaddingTotal, total.getFeeling1(), womanPaddingHot, womanPaddingHotSpace);
                 setDataBar(womanPaddingTotal, total.getFeeling2(), womanPaddingWell, womanPaddingWellSpace);
                 setDataBar(womanPaddingTotal, total.getFeeling3(), womanPaddingCold, womanPaddingColdSpace);
+                setDataResult(womanResultRate, womanCoatTotal, womanPaddingTotal);
             }
         });
     }
@@ -499,6 +508,11 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         params = (LinearLayout.LayoutParams) space.getLayoutParams();
         params.weight = 100-(int)avg;
         space.setLayoutParams(params);
+    }
+
+    private void setDataResult(TextView view, int coat, int padding){
+        double avg = (double)coat/(coat+padding) * 100;
+        view.setText("응답 비율 (코트:"+(int)avg+"%, 패딩:"+(100-(int)avg)+")");
     }
 
     protected void onDestroy() {

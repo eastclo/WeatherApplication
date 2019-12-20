@@ -218,14 +218,6 @@
             android:textStyle="bold"
             android:layout_centerVertical="true"
             android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/result"
-            android:layout_alignBottom="@id/result"
-            android:text=" (코트 입으면 추워요~)"
-            android:layout_marginRight="10dp"
-            android:textSize="12dp"/>
 
         //추움 색 표시
         <LinearLayout
@@ -309,7 +301,7 @@
     </RelativeLayout>
 
     //남자 글씨
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="4"
@@ -320,15 +312,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="남자"
+            android:textColor="#000"
             android:layout_marginLeft="10dp"
             android:textSize="17dp"/>
         <TextView
+            android:id="@+id/man_result_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(코트: 73%, 패딩: 27%)"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/man"
             android:textSize="14dp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     //남자 투표 결과
     <LinearLayout
@@ -535,25 +529,28 @@
     </LinearLayout>
 
     //여자 글씨
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="4"
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <TextView
+            android:id="@+id/woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="여자"
+            android:textColor="#000"
             android:layout_marginLeft="10dp"
             android:textSize="17dp"/>
         <TextView
+            android:id="@+id/woman_result_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(코트: 73%, 패딩: 27%)"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/woman"
             android:textSize="14dp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     //여자 투표 결과
     <LinearLayout
