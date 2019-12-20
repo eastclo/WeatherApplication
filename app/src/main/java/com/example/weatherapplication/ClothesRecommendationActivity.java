@@ -184,7 +184,6 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
                     intent = new Intent(getApplicationContext(), SettingsActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 return false;
             }

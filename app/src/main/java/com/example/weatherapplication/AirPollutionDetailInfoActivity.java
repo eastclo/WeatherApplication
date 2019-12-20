@@ -188,6 +188,12 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     };
 
     @Override
+    protected void onPause() {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        super.onPause();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_air_pollution_detail_info);
@@ -216,11 +222,9 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 initialX = motionEvent.getRawX();
                 pointCurX = motionEvent.getRawX();
-                System.out.println(motionEvent.getAction());
                 if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
                     intent = new Intent(getApplicationContext(), SettingsActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 return false;
             }
@@ -327,8 +331,6 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         unbindService(mConnection);
-        finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         super.onDestroy();
     }
 
