@@ -188,12 +188,6 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     };
 
     @Override
-    protected void onPause() {
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        super.onPause();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_air_pollution_detail_info);
