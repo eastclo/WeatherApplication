@@ -1,8 +1,5 @@
 package com.example.weatherapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -73,6 +73,7 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
             "대전광역시", "부산광역시", "서울특별시", "울산광역시", "인천광역시", "전라남도", "전라북도",
             "제주특별자치도", "충청남도", "충청북도"};
 
+    ImageView settingBtn;
 
     private ServiceConnection mConnection = new ServiceConnection(){
         @Override
@@ -116,9 +117,27 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
         adminAreaView = findViewById(R.id.admin_area);
         loocalityView = findViewById(R.id.sub_locality);
         myRegionTotalVote = findViewById(R.id.myRegionTotalVote);
+        settingBtn = findViewById(R.id.setting);
+        settingBtn.setOnTouchListener(new View.OnTouchListener(){
+            Intent intent;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                initialX = motionEvent.getRawX();
+                pointCurX = motionEvent.getRawX();
+                System.out.println(motionEvent.getAction());
+                if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
+                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                return false;
+            }
+        });
 
         yesButton.setOnClickListener(this);
         noButton.setOnClickListener(this);
+
+
 
         /*Bound서비스 호출*/
         Intent bIntent = new Intent();

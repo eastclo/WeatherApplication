@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -99,6 +100,8 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
     TextView manResultRate;
     TextView womanResultRate;
 
+    ImageView settingBtn;
+
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -170,6 +173,22 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         womanPaddingColdSpace = findViewById(R.id.woman_padding_cold_space);
         manResultRate = findViewById(R.id.man_result_rate);
         womanResultRate = findViewById(R.id.woman_result_rate);
+        settingBtn = findViewById(R.id.setting);
+        settingBtn.setOnTouchListener(new View.OnTouchListener(){
+            Intent intent;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                initialX = motionEvent.getRawX();
+                pointCurX = motionEvent.getRawX();
+                System.out.println(motionEvent.getAction());
+                if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
+                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                return false;
+            }
+        });
 
         //Gps서비스 시작
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
