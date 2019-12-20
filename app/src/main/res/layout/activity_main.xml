@@ -36,8 +36,8 @@
             android:layout_alignBottom="@+id/cityName"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/cityName"
-            android:text="구 이름"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:textColor="#000"/>
 
         <TextView
             android:id="@+id/cityName"
@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="25dp"
-            android:text="시 이름"
-            android:textSize="40dp" />
+            android:textSize="40dp"
+            android:textColor="#000"/>
     </RelativeLayout>
 
     <LinearLayout
