@@ -371,24 +371,69 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="5dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#FF0000"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/man_coat_hot"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#FF0000"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/man_coat_hot_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="70dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="#7C7C7C"/>
+                        android:weightSum="100"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/man_coat_well"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#7C7C7C"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/man_coat_well_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="230dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#0009FF"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/man_coat_cold"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#0009FF"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/man_coat_cold_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -420,24 +465,69 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#FF0000"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/man_padding_hot"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#FF0000"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/man_padding_hot_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="#7C7C7C"/>
+                        android:weightSum="100"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/man_padding_well"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#7C7C7C"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/man_padding_well_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="70dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#0009FF"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/man_padding_cold"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#0009FF"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/man_padding_cold_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -506,24 +596,69 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="5dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#FF0000"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/woman_coat_hot"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#FF0000"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/woman_coat_hot_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="130dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="#7C7C7C"/>
+                        android:weightSum="100"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/woman_coat_well"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#7C7C7C"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/woman_coat_well_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="160dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#0009FF"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/woman_coat_cold"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#0009FF"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/woman_coat_cold_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -555,24 +690,69 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#FF0000"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/woman_padding_hot"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#FF0000"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/woman_padding_hot_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="#7C7C7C"/>
+                        android:weightSum="100"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/woman_padding_well"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#7C7C7C"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/woman_padding_well_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
                     <LinearLayout
-                        android:layout_width="70dp"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:weightSum="100"
+                        android:orientation="horizontal"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp"
-                        android:background="#0009FF"/>
+                        android:layout_marginBottom="7dp">
+                        <LinearLayout
+                            android:id="@+id/woman_padding_cold"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#0009FF"
+                            android:orientation="horizontal" />
+                        <LinearLayout
+                            android:id="@+id/woman_padding_cold_space"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>

@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -35,7 +37,7 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     TextView indicator2;
     TextView indicator3;
     TextView indicator4;
-    TextView indicator5;
+    TextView currindicator;
     TextView adminAreaView;
     TextView subLoocalityView;
     RelativeLayout map;
@@ -43,6 +45,9 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
             dataViewGwangju, dataViewGyeongbuk, dataViewGyeonggi, dataViewGyeongnam, dataViewIncheon,
             dataViewJeju, dataViewJeonbuk, dataViewJeonnam, dataViewKorea, dataViewSeoul, dataViewUlsan;
     View currDataView;
+
+    ImageView mapImg;
+    ImageView standardImg;
 
     //gps 수신을 위한 방송수신자
     LocalBroadcastManager mLocalBroadcastManager;
@@ -66,14 +71,14 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     private class ThreadParser extends Thread{    //파싱
         @Override
         public void run() {
-            AirQualityDataParser parser = new AirQualityDataParser(cityArray[position], pollution);
-            if(position != 0) {
-                dataList = parser.sggParsing();
+            AirQualityDataParser parser;
+            if(pollution.equals(DataView.ultraVioletRays)){
+                parser = new AirQualityDataParser(cityArray[0], pollution);
+                dataList = parser.ultraVioletRaysUrlParsing();
             } else {
-                if(pollution.equals(DataView.yellowDust))
-                    ;
-                else if(pollution.equals(DataView.ultraVioletRays))
-                    dataList = parser.ultraVioletRaysUrlParsing();
+                parser = new AirQualityDataParser(cityArray[position], pollution);
+                if(position != 0)
+                    dataList = parser.sggParsing();
                 else
                     dataList = parser.sidoUrlParsing();
             }
@@ -132,6 +137,9 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
                     break;
             }
 
+            if(pollution.equals(DataView.ultraVioletRays))
+                settingView = new DataViewKorea(getApplicationContext(), currDataView);
+
             mhandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -148,17 +156,19 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         adminAreaView = findViewById(R.id.admin_area);
         subLoocalityView = findViewById(R.id.sub_locality);
 
+        mapImg = findViewById(R.id.map);
+        standardImg = findViewById(R.id.atmosphere_environment_standard);
+
         indicator1 = findViewById(R.id.tab1_indicator) ;
         indicator2 = findViewById(R.id.tab2_indicator) ;
         indicator3 = findViewById(R.id.tab3_indicator) ;
         indicator4 = findViewById(R.id.tab4_indicator) ;
-        indicator5 = findViewById(R.id.tab5_indicator) ;
+        currindicator = indicator1;
 
         indicator1.setOnClickListener(this);
         indicator2.setOnClickListener(this);
         indicator3.setOnClickListener(this);
         indicator4.setOnClickListener(this);
-        indicator5.setOnClickListener(this);
         cityArray = getResources().getStringArray(R.array.cityName);
        /*GPS 서비스 시작*/
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
@@ -230,6 +240,9 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+        currindicator = indicator1;
+        currindicator.setPaintFlags(currindicator.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+        currindicator.setTextColor(Color.BLACK);
     }
 
     private void setSpinnerSelection(){
@@ -259,25 +272,54 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
-        ImageView img = findViewById(R.id.atmosphere_environment_standard);
-        if(view == indicator1){
-            img.setImageResource(R.drawable.standard_fin_dust);
+        if (view == indicator1) {
+            standardImg.setImageResource(R.drawable.standard_fin_dust);
             pollution = "PM10";
-        }else if(view == indicator2) {
-            img.setImageResource(R.drawable.standard_ultrafine_dust);
+            spinner.setVisibility(View.VISIBLE);
+            itemSelect();
+            //색 지정
+            currindicator.setPaintFlags(currindicator.getPaintFlags() &~ Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.GRAY);
+            currindicator = indicator1;
+            currindicator.setPaintFlags(currindicator.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.BLACK);
+        } else if (view == indicator2) {
+            standardImg.setImageResource(R.drawable.standard_ultrafine_dust);
             pollution = "PM25";
-        }
-        else if(view == indicator3) {
-            img.setImageResource(R.drawable.standard_yellow_dust);
-            pollution = DataView.yellowDust;
-        }
-        else if(view == indicator4) {
-            img.setImageResource(R.drawable.standard_ultraviolet_rays);
+            spinner.setVisibility(View.VISIBLE);
+            itemSelect();
+            //색 지정
+            currindicator.setPaintFlags(currindicator.getPaintFlags() &~ Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.GRAY);
+            currindicator = indicator2;
+            currindicator.setPaintFlags(currindicator.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.BLACK);
+        } else if (view == indicator3) {
+            standardImg.setImageResource(R.drawable.standard_ultraviolet_rays);
             pollution = DataView.ultraVioletRays;
-        }
-        else if(view == indicator5) {
-            img.setImageResource(R.drawable.standard_ozone);
+
+            spinner.setVisibility(View.GONE);
+            currDataView.setVisibility(View.GONE);
+            mapImg.setImageResource(R.drawable.map_korea);
+            dataViewKorea.setVisibility(View.VISIBLE);
+            currDataView = dataViewKorea;
+            //색 지정
+            currindicator.setPaintFlags(currindicator.getPaintFlags() &~ Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.GRAY);
+            currindicator = indicator3;
+            currindicator.setPaintFlags(currindicator.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.BLACK);
+        } else if (view == indicator4) {
+            standardImg.setImageResource(R.drawable.standard_ozone);
             pollution = "O3";
+            spinner.setVisibility(View.VISIBLE);
+            itemSelect();
+            //색 지정
+            currindicator.setPaintFlags(currindicator.getPaintFlags() &~ Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.GRAY);
+            currindicator = indicator4;
+            currindicator.setPaintFlags(currindicator.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+            currindicator.setTextColor(Color.BLACK);
         }
         ThreadParser parserThread = new ThreadParser();
         parserThread.start();   //탭 클릭 될 때 마다 파싱
@@ -286,113 +328,116 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         this.position = position;
-        ImageView img = findViewById(R.id.map);
+        itemSelect();
+        ThreadParser parserThread = new ThreadParser();
+        parserThread.start();   //스피너 선택 될 때 마다 파싱
+    }
+
+    private void itemSelect(){
         switch(position){
             case 0:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_korea);
+                mapImg.setImageResource(R.drawable.map_korea);
                 dataViewKorea.setVisibility(View.VISIBLE);
                 currDataView = dataViewKorea;
                 break;
             case 1:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_gangwon);
+                mapImg.setImageResource(R.drawable.map_gangwon);
                 dataViewGangwon.setVisibility(View.VISIBLE);
                 currDataView = dataViewGangwon;
                 break;
             case 2:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_gyeonggido);
+                mapImg.setImageResource(R.drawable.map_gyeonggido);
                 dataViewGyeonggi.setVisibility(View.VISIBLE);
                 currDataView = dataViewGyeonggi;
                 break;
             case 3:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_gyeongsangnamdo);
+                mapImg.setImageResource(R.drawable.map_gyeongsangnamdo);
                 dataViewGyeongnam.setVisibility(View.VISIBLE);
                 currDataView = dataViewGyeongnam;
                 break;
             case 4:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_gyeongsangbukdo);
+                mapImg.setImageResource(R.drawable.map_gyeongsangbukdo);
                 dataViewGyeongbuk.setVisibility(View.VISIBLE);
                 currDataView = dataViewGyeongbuk;
                 break;
             case 5:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_gwangju);
+                mapImg.setImageResource(R.drawable.map_gwangju);
                 dataViewGwangju.setVisibility(View.VISIBLE);
                 currDataView = dataViewGwangju;
                 break;
             case 6:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_daegu);
+                mapImg.setImageResource(R.drawable.map_daegu);
                 dataViewDaegu.setVisibility(View.VISIBLE);
                 currDataView = dataViewDaegu;
                 break;
             case 7:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_daejeon);
+                mapImg.setImageResource(R.drawable.map_daejeon);
                 dataViewDaejeon.setVisibility(View.VISIBLE);
                 currDataView = dataViewDaejeon;
                 break;
             case 8:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_busan);
+                mapImg.setImageResource(R.drawable.map_busan);
                 dataViewBusan.setVisibility(View.VISIBLE);
                 currDataView = dataViewBusan;
                 break;
             case 9:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_seoul);
+                mapImg.setImageResource(R.drawable.map_seoul);
                 dataViewSeoul.setVisibility(View.VISIBLE);
                 currDataView = dataViewSeoul;
                 break;
             case 10:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_ulsan);
+                mapImg.setImageResource(R.drawable.map_ulsan);
                 dataViewUlsan.setVisibility(View.VISIBLE);
                 currDataView = dataViewUlsan;
                 break;
             case 11:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_incheon);
+                mapImg.setImageResource(R.drawable.map_incheon);
                 dataViewIncheon.setVisibility(View.VISIBLE);
                 currDataView = dataViewIncheon;
                 break;
             case 12:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_jeollanamdo);
+                mapImg.setImageResource(R.drawable.map_jeollanamdo);
                 dataViewJeonnam.setVisibility(View.VISIBLE);
                 currDataView = dataViewJeonnam;
                 break;
             case 13:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_jeollabukdo);
+                mapImg.setImageResource(R.drawable.map_jeollabukdo);
                 dataViewJeonbuk.setVisibility(View.VISIBLE);
                 currDataView = dataViewJeonbuk;
                 break;
             case 14:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_jeju);
+                mapImg.setImageResource(R.drawable.map_jeju);
                 dataViewJeju.setVisibility(View.VISIBLE);
                 currDataView = dataViewJeju;
                 break;
             case 15:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_chungcheongnamdo);
+                mapImg.setImageResource(R.drawable.map_chungcheongnamdo);
                 dataViewChungnam.setVisibility(View.VISIBLE);
                 currDataView = dataViewChungnam;
                 break;
             case 16:
                 currDataView.setVisibility(View.GONE);
-                img.setImageResource(R.drawable.map_chungcheongbukdo);
+                mapImg.setImageResource(R.drawable.map_chungcheongbukdo);
                 dataViewChungbuk.setVisibility(View.VISIBLE);
                 currDataView = dataViewChungbuk;
                 break;
         }
-        ThreadParser parserThread = new ThreadParser();
-        parserThread.start();   //스피너 선택 될 때 마다 파싱
     }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) { }
