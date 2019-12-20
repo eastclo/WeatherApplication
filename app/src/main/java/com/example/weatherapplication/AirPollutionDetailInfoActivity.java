@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -72,6 +73,11 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     DataView settingView;
 
     GpsService gpsService = null;
+
+    ImageView settingBtn;
+    //터치 이벤트 x좌표 기록
+    float pointCurX = 0;
+    float initialX = 0;
 
     private class ThreadParser extends Thread{    //파싱
         @Override
@@ -188,6 +194,23 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         indicator3.setOnClickListener(this);
         indicator4.setOnClickListener(this);
         cityArray = getResources().getStringArray(R.array.cityName);
+
+        settingBtn = findViewById(R.id.setting);
+        settingBtn.setOnTouchListener(new View.OnTouchListener(){
+            Intent intent;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                initialX = motionEvent.getRawX();
+                pointCurX = motionEvent.getRawX();
+                System.out.println(motionEvent.getAction());
+                if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
+                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                return false;
+            }
+        });
        /*GPS 서비스 시작*/
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
         startService(intent);
