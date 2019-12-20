@@ -483,7 +483,7 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
                 //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
                 if (initialX - pointCurX > -300) {
                     startActivity(new Intent(this, MainActivity.class));
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     finish();
                 }
         }
