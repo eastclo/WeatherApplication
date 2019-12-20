@@ -166,12 +166,32 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
 
             gpsService=new GpsService();
             gpsService=((GpsService.LocalBinder)iBinder).getCountService();
+
+            //호출 시간이 기므로, GPS의 값이 있어야 구현이 되는 View는 이곳에 구현
+            Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
+            try {
+                addresses = coder.getFromLocation(gpsService.getLocation().getLatitude(), gpsService.getLocation().getLongitude(), 3); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            adminArea = addresses.get(0).getAdminArea();
+            subLocality = addresses.get(0).getSubLocality();
+
+            adminAreaView.setText(adminArea);
+            subLoocalityView.setText((subLocality));
+            setSpinnerSelection();
         }
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
 
         }
     };
+
+    @Override
+    protected void onPause() {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        super.onPause();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,11 +222,9 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 initialX = motionEvent.getRawX();
                 pointCurX = motionEvent.getRawX();
-                System.out.println(motionEvent.getAction());
                 if(motionEvent.getAction()==MotionEvent.ACTION_UP||motionEvent.getAction()==MotionEvent.ACTION_CANCEL) {
                     intent = new Intent(getApplicationContext(), SettingsActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 return false;
             }
