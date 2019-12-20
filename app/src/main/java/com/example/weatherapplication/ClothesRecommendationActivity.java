@@ -9,13 +9,13 @@ import android.content.ServiceConnection;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,10 +68,34 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
     // 파이어 베이스 데이터 송수신을 위한 변수
     FirebaseFirestore db;
     // 그래프 바를 그리기 위한 객체
-    TotalClothRecommandVote maleCloth1;
-    TotalClothRecommandVote maleCloth2;
-    TotalClothRecommandVote femaleCloth1;
-    TotalClothRecommandVote femaleCloth2;
+    LinearLayout manCoatHot;
+    LinearLayout manCoatHotSpace;
+    LinearLayout manCoatWell;
+    LinearLayout manCoatWellSpace;
+    LinearLayout manCoatCold;
+    LinearLayout manCoatColdSpace;
+    LinearLayout manPaddingHot;
+    LinearLayout manPaddingHotSpace;
+    LinearLayout manPaddingWell;
+    LinearLayout manPaddingWellSpace;
+    LinearLayout manPaddingCold;
+    LinearLayout manPaddingColdSpace;
+    LinearLayout womanCoatHot;
+    LinearLayout womanCoatHotSpace;
+    LinearLayout womanCoatWell;
+    LinearLayout womanCoatWellSpace;
+    LinearLayout womanCoatCold;
+    LinearLayout womanCoatColdSpace;
+    LinearLayout womanPaddingHot;
+    LinearLayout womanPaddingHotSpace;
+    LinearLayout womanPaddingWell;
+    LinearLayout womanPaddingWellSpace;
+    LinearLayout womanPaddingCold;
+    LinearLayout womanPaddingColdSpace;
+    int manCoatTotal;
+    int manPaddingTotal;
+    int womanCoatTotal;
+    int womanPaddingTotal;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -81,6 +105,17 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             System.out.println(gpsService.getLocation().getLatitude() + " " + gpsService.getLocation().getLongitude());
             //gpsService에서 getlocation()호출해서 getlatitude와 getlongitude를 통해 얻어서 사용하면됨
             //호출 시간이 기므로, GPS의 값이 있어야 구현이 되는 View는 이곳에 구현
+            Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
+            try {
+                addresses = coder.getFromLocation(gpsService.getLocation().getLatitude(), gpsService.getLocation().getLongitude(), 3); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            adminArea = addresses.get(0).getAdminArea();
+            subLocality = addresses.get(0).getSubLocality();
+
+            adminAreaView.setText(adminArea);
+            subLoocalityView.setText((subLocality));
         }
 
         @Override
@@ -106,6 +141,30 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         feeling1 = findViewById(R.id.feeling1);
         feeling2 = findViewById(R.id.feeling2);
         feeling3 = findViewById(R.id.feeling3);
+        manCoatHot = findViewById(R.id.man_coat_hot);
+        manCoatHotSpace = findViewById(R.id.man_coat_hot_space);
+        manCoatWell = findViewById(R.id.man_coat_well);
+        manCoatWellSpace = findViewById(R.id.man_coat_well_space);
+        manCoatCold = findViewById(R.id.man_coat_cold);
+        manCoatColdSpace = findViewById(R.id.man_coat_cold_space);
+        manPaddingHot = findViewById(R.id.man_padding_hot);
+        manPaddingHotSpace = findViewById(R.id.man_padding_hot_space);
+        manPaddingWell = findViewById(R.id.man_padding_well);
+        manPaddingWellSpace = findViewById(R.id.man_padding_well_space);
+        manPaddingCold = findViewById(R.id.man_padding_cold);
+        manPaddingColdSpace = findViewById(R.id.man_padding_cold_space);
+        womanCoatHot = findViewById(R.id.woman_coat_hot);
+        womanCoatHotSpace = findViewById(R.id.woman_coat_hot_space);
+        womanCoatWell = findViewById(R.id.woman_coat_well);
+        womanCoatWellSpace = findViewById(R.id.woman_coat_well_space);
+        womanCoatCold = findViewById(R.id.woman_coat_cold);
+        womanCoatColdSpace = findViewById(R.id.woman_coat_cold_space);
+        womanPaddingHot = findViewById(R.id.woman_padding_hot);
+        womanPaddingHotSpace = findViewById(R.id.woman_padding_hot_space);
+        womanPaddingWell = findViewById(R.id.woman_padding_well);
+        womanPaddingWellSpace = findViewById(R.id.woman_padding_well_space);
+        womanPaddingCold = findViewById(R.id.woman_padding_cold);
+        womanPaddingColdSpace = findViewById(R.id.woman_padding_cold_space);
 
         //Gps서비스 시작
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
@@ -116,7 +175,6 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         ComponentName componentName = new ComponentName("com.example.weatherapplication", "com.example.weatherapplication.GpsService");
         bIntent.setComponent(componentName);
         bindService(bIntent, mConnection, 0);
-
 
         //지역 정보 출력을 위한 로컬브로드캐스트 호출
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -138,6 +196,7 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 }
             }
         };
+
     }
 
     @Override
@@ -388,6 +447,10 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
                 // 남자 옷 1 막대
+                manCoatTotal = total.getFeeling1() + total.getFeeling2() + total.getFeeling3();
+                setDataBar(manCoatTotal, total.getFeeling1(), manCoatHot, manCoatHotSpace);
+                setDataBar(manCoatTotal, total.getFeeling2(), manCoatWell, manCoatWellSpace);
+                setDataBar(manCoatTotal, total.getFeeling3(), manCoatCold, manCoatColdSpace);
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("male").document("cloth2");
@@ -396,7 +459,10 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
                 // 남자 옷 2 막대
-
+                manPaddingTotal = total.getFeeling1() + total.getFeeling2() + total.getFeeling3();
+                setDataBar(manPaddingTotal, total.getFeeling1(), manPaddingHot, manPaddingHotSpace);
+                setDataBar(manPaddingTotal, total.getFeeling2(), manPaddingWell, manPaddingWellSpace);
+                setDataBar(manPaddingTotal, total.getFeeling3(), manPaddingCold, manPaddingColdSpace);
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("female").document("cloth1");
@@ -405,6 +471,10 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
                 // 여자 옷 1 막대
+                womanCoatTotal = total.getFeeling1() + total.getFeeling2() + total.getFeeling3();
+                setDataBar(womanCoatTotal, total.getFeeling1(), womanCoatHot, womanCoatHotSpace);
+                setDataBar(womanCoatTotal, total.getFeeling2(), womanCoatWell, womanCoatWellSpace);
+                setDataBar(womanCoatTotal, total.getFeeling3(), womanCoatCold, womanCoatColdSpace);
             }
         });
         totalDocRef = db.collection("ClothRecommand").document(adminArea).collection("female").document("cloth2");
@@ -413,8 +483,22 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
                 // 여자 옷 2 막대
+                womanPaddingTotal = total.getFeeling1() + total.getFeeling2() + total.getFeeling3();
+                setDataBar(womanPaddingTotal, total.getFeeling1(), womanPaddingHot, womanPaddingHotSpace);
+                setDataBar(womanPaddingTotal, total.getFeeling2(), womanPaddingWell, womanPaddingWellSpace);
+                setDataBar(womanPaddingTotal, total.getFeeling3(), womanPaddingCold, womanPaddingColdSpace);
             }
         });
+    }
+
+    private void setDataBar(int total, int data, LinearLayout dataGraph, LinearLayout space){
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) dataGraph.getLayoutParams();
+        double avg = (double)data/total * 100;
+        params.weight = (int)avg;
+        dataGraph.setLayoutParams(params);
+        params = (LinearLayout.LayoutParams) space.getLayoutParams();
+        params.weight = 100-(int)avg;
+        space.setLayoutParams(params);
     }
 
     protected void onDestroy() {
