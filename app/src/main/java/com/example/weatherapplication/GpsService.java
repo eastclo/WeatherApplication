@@ -7,17 +7,21 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import javax.annotation.Nullable;
+
 public class GpsService extends Service {
 
     private LocationManager locationManager = null;
     private static final int LOCATION_MILLISEC = 1000;
     private static final float LOCATION_DISTANCE = 1;
+    public Location slocation =null;
 
     public static final String
             ACTION_LOCATION_BROADCAST = GpsService.class.getName() + "LocationBroadcast",
@@ -34,11 +38,13 @@ public class GpsService extends Service {
 
         public LocationListener(String provider) {
             lastLocation = new Location(provider);
+            slocation = new Location(provider);
         }
 
         @Override
         public void onLocationChanged(Location location) {
             lastLocation.set(location);
+            slocation.set(location);
             sendBroadcastMessage(lastLocation); //Location이 바뀔 때 마다 sendMessage
         }
 
@@ -70,9 +76,21 @@ public class GpsService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    public class LocalBinder extends Binder {
+        GpsService getCountService(){
+            return GpsService.this;
+        }
+    }
+    public Location getLocation(){
+        return slocation;
+    }
+
+    private final Binder mBinder = new LocalBinder();
+
+    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     @Override
@@ -90,6 +108,7 @@ public class GpsService extends Service {
                         locationListeners[0]);
             } catch (java.lang.SecurityException ex) {
             } catch (IllegalArgumentException ex){}
+        slocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         }
 

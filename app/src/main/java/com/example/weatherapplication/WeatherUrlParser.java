@@ -82,7 +82,6 @@ public class WeatherUrlParser {
         tomorrow=new SimpleDateFormat("yyyyMMdd").format(cc.getTime());
         cc.add(Calendar.DATE,1);
         secondday=new SimpleDateFormat("yyyyMMdd").format(cc.getTime());
-        System.out.println(tomorrow + " " + secondday);
 
         if(hourS<5) {
             if (dayS < 1) {
@@ -152,7 +151,6 @@ public class WeatherUrlParser {
         daycheck=new SimpleDateFormat("yyyyMMdd").format(date);
         String urlstr = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey=EqI90gI9JVO%2FedhJZoZidhwWEh5C9Mu2%2B3xX0CnGWlBjeMBZhkCuwEdprXnJhguY4a6D5bImMP7aUOQRy4uL8g%3D%3D&base_date="+dayinput+"&base_time="+"0500"+"&nx="+(int)x+"&ny="+(int)y+"&numOfRows=300&pageNo=1&_type=xml";
 
-        System.out.println(urlstr);
         try {
             url = new URL(urlstr);
             parsing();
@@ -397,8 +395,6 @@ public class WeatherUrlParser {
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("1day : "+taMAX1day + " " + taMIN1day + " "+rnSt1day + " " + sky1day);
-        System.out.println("2day : "+taMAX2day + " " + taMIN2day + " "+rnSt2day + " " + sky2day);
         if(TMN.equals(""))
             TMN= Integer.toString(Collections.min(tempTM));
         if(TMX.equals(""))

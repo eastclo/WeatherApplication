@@ -1,13 +1,16 @@
 package com.example.weatherapplication;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.os.IBinder;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +33,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class ClothesRecommendationActivity extends AppCompatActivity implements View.OnClickListener {
+
+    GpsService gpsService = null;
 
     //터치 이벤트 x좌표 기록
     float pointCurX = 0;
@@ -69,6 +74,21 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
     TotalClothRecommandVote femaleCloth1;
     TotalClothRecommandVote femaleCloth2;
 
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            gpsService = new GpsService();
+            gpsService = ((GpsService.LocalBinder) iBinder).getCountService();
+            System.out.println(gpsService.getLocation().getLatitude()+" "+gpsService.getLocation().getLongitude());
+            //gpsService에서 getlocation()호출해서 getlatitude와 getlongitude를 통해 얻어서 사용하면됨
+            //호출 시간이 기므로, GPS의 값이 있어야 구현이 되는 View는 이곳에 구현
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +110,13 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         //Gps서비스 시작
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
         startService(intent);
+
+        /*Bound서비스 호출*/
+        Intent bIntent = new Intent();
+        ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
+        bIntent.setComponent(componentName);
+        bindService(bIntent,mConnection,0);
+
 
         //지역 정보 출력을 위한 로컬브로드캐스트 호출
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -398,5 +425,8 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 // 여자 옷 2에대한 막대
             }
         });
+    protected void onDestroy() {
+        unbindService(mConnection);
+        super.onDestroy();
     }
 }

@@ -3,13 +3,17 @@ package com.example.weatherapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +44,7 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
     // For GPS
     LocalBroadcastManager mLocalBroadcastManager;
     BroadcastReceiver mReceiver;
+    GpsService gpsService = null;
     //지역 정보 저장을 위한 변수 선언
     String adminArea;
     String locality;
@@ -65,6 +70,22 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
             "대전광역시", "부산광역시", "서울특별시", "울산광역시", "인천광역시", "전라남도", "전라북도",
             "제주특별자치도", "충청남도", "충청북도"};
 
+
+    private ServiceConnection mConnection = new ServiceConnection(){
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            gpsService = new GpsService();
+            gpsService=((GpsService.LocalBinder)iBinder).getCountService();
+            System.out.println(gpsService.getLocation().getLatitude()+" "+gpsService.getLocation().getLongitude());
+            //gpsService에서 getlocation()호출해서 getlatitude와 getlongitude를 통해 얻어서 사용하면됨
+            //호출 시간이 기므로, GPS의 값이 있어야 구현이 되는 View는 이곳에 구현
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +106,13 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
         /*GPS 서비스 시작*/
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
         startService(intent);
+
+        /*Bound서비스 호출*/
+        Intent bIntent = new Intent();
+        ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
+        bIntent.setComponent(componentName);
+        bindService(bIntent,mConnection,0);
+
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -164,7 +192,7 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(this, GpsService.class));
+        unbindService(mConnection);
     }
 
     @Override
