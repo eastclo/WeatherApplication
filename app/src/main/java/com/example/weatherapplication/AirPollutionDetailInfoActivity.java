@@ -1,15 +1,18 @@
 package com.example.weatherapplication;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +70,8 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
     Handler mhandler = new Handler();
     ArrayList<Pair<String, String>> dataList;
     DataView settingView;
+
+    GpsService gpsService = null;
 
     private class ThreadParser extends Thread{    //파싱
         @Override
@@ -149,6 +154,19 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
         }
     };
 
+    private ServiceConnection mConnection = new ServiceConnection(){
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            gpsService=new GpsService();
+            gpsService=((GpsService.LocalBinder)iBinder).getCountService();
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +191,11 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
        /*GPS 서비스 시작*/
         Intent intent = new Intent(getApplicationContext(), GpsService.class);
         startService(intent);
+
+        Intent bIntent = new Intent();
+        ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
+        bIntent.setComponent(componentName);
+        bindService(bIntent,mConnection,0);
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mReceiver = new BroadcastReceiver() {
@@ -266,8 +289,8 @@ public class AirPollutionDetailInfoActivity extends AppCompatActivity implements
 
     @Override
     protected void onDestroy() {
+        unbindService(mConnection);
         super.onDestroy();
-        stopService(new Intent(this,GpsService.class));
     }
 
     @Override

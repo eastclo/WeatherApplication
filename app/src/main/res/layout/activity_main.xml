@@ -26,8 +26,8 @@
             android:adjustViewBounds="true"
             android:clickable="true"
             android:src="@drawable/setting_icon"
-            android:scaleType="centerCrop"
-            android:background="?attr/selectableItemBackground"/>
+            android:background="?attr/selectableItemBackground"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/localityName"
