@@ -54,7 +54,6 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
     String sex = "";
     int cloth = 0;
     int feeling = 0;
-    boolean didVoted = true;
     boolean wasRight = true;
     int[] myPastVote = {0, 0};   // index 0 : 옷, index 1 : 체감
     // 투표를 위한 버튼
@@ -79,10 +78,11 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             gpsService = new GpsService();
             gpsService = ((GpsService.LocalBinder) iBinder).getCountService();
-            System.out.println(gpsService.getLocation().getLatitude()+" "+gpsService.getLocation().getLongitude());
+            System.out.println(gpsService.getLocation().getLatitude() + " " + gpsService.getLocation().getLongitude());
             //gpsService에서 getlocation()호출해서 getlatitude와 getlongitude를 통해 얻어서 사용하면됨
             //호출 시간이 기므로, GPS의 값이 있어야 구현이 되는 View는 이곳에 구현
         }
+
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
 
@@ -113,9 +113,9 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
 
         /*Bound서비스 호출*/
         Intent bIntent = new Intent();
-        ComponentName componentName = new ComponentName("com.example.weatherapplication","com.example.weatherapplication.GpsService");
+        ComponentName componentName = new ComponentName("com.example.weatherapplication", "com.example.weatherapplication.GpsService");
         bIntent.setComponent(componentName);
-        bindService(bIntent,mConnection,0);
+        bindService(bIntent, mConnection, 0);
 
 
         //지역 정보 출력을 위한 로컬브로드캐스트 호출
@@ -213,10 +213,42 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 MyClothRecommandVote answer = documentSnapshot.toObject(MyClothRecommandVote.class);
                 if (answer == null) {   // 해당 유저가 해당 지역에 투표 하지 않은 경우
-                    Log.d("asd", "투표 x");
-                    didVoted = false;
                     answer = new MyClothRecommandVote(cloth, feeling);
                     db.collection("ClothRecommand").document(adminArea).collection(sex).document(uniqueID).set(answer);
+                    DocumentReference totalDocRef;
+                    if (cloth == 1) {
+                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
+                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                if (feeling == 1) {
+                                    total.setFeeling1(total.getFeeling1() + 1);
+                                } else if (feeling == 2) {
+                                    total.setFeeling2(total.getFeeling2() + 1);
+                                } else {    // feeling == 3
+                                    total.setFeeling3(total.getFeeling3() + 1);
+                                }
+                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
+                            }
+                        });
+                    } else {    // cloth == 2
+                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
+                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                if (feeling == 1) {
+                                    total.setFeeling1(total.getFeeling1() + 1);
+                                } else if (feeling == 2) {
+                                    total.setFeeling2(total.getFeeling2() + 1);
+                                } else {    // feeling == 3
+                                    total.setFeeling3(total.getFeeling3() + 1);
+                                }
+                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
+                            }
+                        });
+                    }
                 } else {                   // 해당 유저가 해당 지역에 투표를 했던 경우
                     if (answer.getCloth() != cloth || answer.getfeeling() != feeling) {   // answer != myAnswer  =>  해당 유저가 이번에 투표한 내용이 이전 투표 내용과 달라졌을 경우
                         Log.d("asd", "투표 o -> 값 변경");
@@ -226,168 +258,126 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                         myPastVote[1] = answer.getfeeling();
                         answer.setfeeling(feeling);
                         db.collection("ClothRecommand").document(adminArea).collection(sex).document(uniqueID).set(answer);
+                        DocumentReference totalDocRef;
+                        if (!wasRight) {
+                            if (myPastVote[0] != cloth) { // 옷이 달라진 경우
+                                if (cloth == 1) {     // 현재 cloth 1
+                                    totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
+                                    totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                            if (feeling == 1) {
+                                                total.setFeeling1(total.getFeeling1() + 1);
+                                            } else if (feeling == 2) {
+                                                total.setFeeling2(total.getFeeling2() + 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() + 1);
+                                            }
+                                            db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
+                                        }
+                                    });
+                                    totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
+                                    totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                            if (myPastVote[1] == 1) {
+                                                total.setFeeling1(total.getFeeling1() - 1);
+                                            } else if (myPastVote[1] == 2) {
+                                                total.setFeeling2(total.getFeeling2() - 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() - 1);
+                                            }
+                                            db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
+                                        }
+                                    });
+                                } else if (cloth == 2) {
+                                    totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
+                                    totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                            if (feeling == 1) {
+                                                total.setFeeling1(total.getFeeling1() + 1);
+                                            } else if (feeling == 2) {
+                                                total.setFeeling2(total.getFeeling2() + 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() + 1);
+                                            }
+                                            db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
+                                        }
+                                    });
+                                    totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
+                                    totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                            if (myPastVote[1] == 1) {
+                                                total.setFeeling1(total.getFeeling1() - 1);
+                                            } else if (myPastVote[1] == 2) {
+                                                total.setFeeling2(total.getFeeling2() - 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() - 1);
+                                            }
+                                            db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
+                                        }
+                                    });
+                                }
+                            } else if (myPastVote[1] != feeling) {   // 체감이 달라진 경우
+                                if (cloth == 1) {     // 현재 cloth 1
+                                    totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
+                                    totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                            if (feeling == 1) {
+                                                total.setFeeling1(total.getFeeling1() + 1);
+                                            } else if (feeling == 2) {
+                                                total.setFeeling2(total.getFeeling2() + 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() + 1);
+                                            }
+                                            if (myPastVote[1] == 1) {
+                                                total.setFeeling1(total.getFeeling1() - 1);
+                                            } else if (myPastVote[1] == 2) {
+                                                total.setFeeling2(total.getFeeling2() - 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() - 1);
+                                            }
+                                            db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
+                                        }
+                                    });
+                                } else if (cloth == 2) {
+                                    totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
+                                    totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
+                                            if (feeling == 1) {
+                                                total.setFeeling1(total.getFeeling1() + 1);
+                                            } else if (feeling == 2) {
+                                                total.setFeeling2(total.getFeeling2() + 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() + 1);
+                                            }
+                                            if (myPastVote[1] == 1) {
+                                                total.setFeeling1(total.getFeeling1() - 1);
+                                            } else if (myPastVote[1] == 2) {
+                                                total.setFeeling2(total.getFeeling2() - 1);
+                                            } else {    // feeling == 3
+                                                total.setFeeling3(total.getFeeling3() - 1);
+                                            }
+                                            db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
+                                        }
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
             }
         });
-        fixTotalVote();
-    }
-
-    public void fixTotalVote() {
-        //  해당 지역 투표 총량 조정
-        DocumentReference totalDocRef;
-        if (didVoted) {   // 투표 했었음
-            if (!wasRight) {
-                if (myPastVote[0] != cloth) { // 옷이 달라진 경우
-                    if (cloth == 1) {     // 현재 cloth 1
-                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
-                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                                if (feeling == 1) {
-                                    total.setFeeling1(total.getFeeling1() + 1);
-                                } else if (feeling == 2) {
-                                    total.setFeeling2(total.getFeeling2() + 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() + 1);
-                                }
-                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
-                            }
-                        });
-                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
-                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                                if (myPastVote[1] == 1) {
-                                    total.setFeeling1(total.getFeeling1() - 1);
-                                } else if (myPastVote[1] == 2) {
-                                    total.setFeeling2(total.getFeeling2() - 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() - 1);
-                                }
-                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
-                            }
-                        });
-                    } else if (cloth == 2) {
-                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
-                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                                if (feeling == 1) {
-                                    total.setFeeling1(total.getFeeling1() + 1);
-                                } else if (feeling == 2) {
-                                    total.setFeeling2(total.getFeeling2() + 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() + 1);
-                                }
-                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
-                            }
-                        });
-                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
-                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                                if (myPastVote[1] == 1) {
-                                    total.setFeeling1(total.getFeeling1() - 1);
-                                } else if (myPastVote[1] == 2) {
-                                    total.setFeeling2(total.getFeeling2() - 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() - 1);
-                                }
-                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
-                            }
-                        });
-                    }
-                } else if (myPastVote[1] != feeling) {   // 체감이 달라진 경우
-                    if (cloth == 1) {     // 현재 cloth 1
-                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
-                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                                if (feeling == 1) {
-                                    total.setFeeling1(total.getFeeling1() + 1);
-                                } else if (feeling == 2) {
-                                    total.setFeeling2(total.getFeeling2() + 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() + 1);
-                                }
-                                if (myPastVote[1] == 1) {
-                                    total.setFeeling1(total.getFeeling1() - 1);
-                                } else if (myPastVote[1] == 2) {
-                                    total.setFeeling2(total.getFeeling2() - 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() - 1);
-                                }
-                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
-                            }
-                        });
-                    } else if (cloth == 2) {
-                        totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
-                        totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                                if (feeling == 1) {
-                                    total.setFeeling1(total.getFeeling1() + 1);
-                                } else if (feeling == 2) {
-                                    total.setFeeling2(total.getFeeling2() + 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() + 1);
-                                }
-                                if (myPastVote[1] == 1) {
-                                    total.setFeeling1(total.getFeeling1() - 1);
-                                } else if (myPastVote[1] == 2) {
-                                    total.setFeeling2(total.getFeeling2() - 1);
-                                } else {    // feeling == 3
-                                    total.setFeeling3(total.getFeeling3() - 1);
-                                }
-                                db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
-                            }
-                        });
-                    }
-                }
-            }
-        } else {  // 투표 안했었음
-            Log.d("asd", "투표 x");
-            if (cloth == 1) {
-                totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1");
-                totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                        if (feeling == 1) {
-                            total.setFeeling1(total.getFeeling1() + 1);
-                        } else if (feeling == 2) {
-                            total.setFeeling2(total.getFeeling2() + 1);
-                        } else {    // feeling == 3
-                            total.setFeeling3(total.getFeeling3() + 1);
-                        }
-                        db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth1").set(total);
-                    }
-                });
-            } else {    // cloth == 2
-                totalDocRef = db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2");
-                totalDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        TotalClothRecommandVote total = documentSnapshot.toObject(TotalClothRecommandVote.class);
-                        if (feeling == 1) {
-                            total.setFeeling1(total.getFeeling1() + 1);
-                        } else if (feeling == 2) {
-                            total.setFeeling2(total.getFeeling2() + 1);
-                        } else {    // feeling == 3
-                            total.setFeeling3(total.getFeeling3() + 1);
-                        }
-                        db.collection("ClothRecommand").document(adminArea).collection(sex).document("cloth2").set(total);
-                    }
-                });
-            }
-        }
     }
 
     public void getTotal() {
@@ -425,6 +415,8 @@ public class ClothesRecommendationActivity extends AppCompatActivity implements 
                 // 여자 옷 2에대한 막대
             }
         });
+    }
+
     protected void onDestroy() {
         unbindService(mConnection);
         super.onDestroy();
