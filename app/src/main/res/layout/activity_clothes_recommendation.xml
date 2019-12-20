@@ -73,16 +73,19 @@
             android:textStyle="bold"/>
 
         <RadioGroup
+            android:id="@+id/sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text=" 남성"
                 android:textSize="20dp"/>
             <RadioButton
+                android:id="@+id/female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -112,16 +115,19 @@
             android:textStyle="bold"/>
 
         <RadioGroup
+            android:id="@+id/cloth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/cloth1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text=" 코트"
                 android:textSize="20dp"/>
             <RadioButton
+                android:id="@+id/cloth2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -150,11 +156,13 @@
             android:textStyle="bold"/>
 
         <RadioGroup
+            android:id="@+id/feeling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="5dp">
             <RadioButton
+                android:id="@+id/feeling1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -163,6 +171,7 @@
                 android:textColor="#FF0000"/>
 
             <RadioButton
+                android:id="@+id/feeling2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -170,6 +179,7 @@
                 android:textSize="20dp"/>
 
             <RadioButton
+                android:id="@+id/feeling3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
