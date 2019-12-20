@@ -3,7 +3,6 @@ package com.example.weatherapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,6 +15,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,6 +36,9 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class RealTimeWeather extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+    //터치 이벤트 x좌표 기록
+    float pointCurX = 0;
+    float initialX = 0;
     // 뷰
     Button yesButton;
     Button noButton;
@@ -77,8 +80,22 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
             gpsService = new GpsService();
             gpsService=((GpsService.LocalBinder)iBinder).getCountService();
             System.out.println(gpsService.getLocation().getLatitude()+" "+gpsService.getLocation().getLongitude());
-            //gpsService에서 getlocation()호출해서 getlatitude와 getlongitude를 통해 얻어서 사용하면됨
-            //호출 시간이 기므로, GPS의 값이 있어야 구현이 되는 View는 이곳에 구현
+            Geocoder coder = new Geocoder(getApplicationContext(), Locale.KOREA);
+            try {
+                addresses = coder.getFromLocation(gpsService.getLocation().getLatitude(), gpsService.getLocation().getLongitude(), 3); // 첫번째 파라미터로 위도, 두번째로 경도, 세번째 파라미터로 리턴할 Address객체의 개수
+                adminArea = addresses.get(0).getAdminArea();
+                if (adminArea.charAt(adminArea.length() - 1) == '시')
+                    locality = addresses.get(0).getSubLocality();
+                else
+                    locality = addresses.get(0).getLocality();
+
+                adminAreaView.setText(adminArea);
+                loocalityView.setText((locality));
+                setMyRegionTotalVote();
+                setSpinnerSelection();   //지역 정보에 따라 spinner default 값 설정을 위한 메소드 호출
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
@@ -102,10 +119,6 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
 
         yesButton.setOnClickListener(this);
         noButton.setOnClickListener(this);
-
-        /*GPS 서비스 시작*/
-        Intent intent = new Intent(getApplicationContext(), GpsService.class);
-        startService(intent);
 
         /*Bound서비스 호출*/
         Intent bIntent = new Intent();
@@ -182,6 +195,8 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+
     }
 
     protected void onResume() {
@@ -436,5 +451,23 @@ public class RealTimeWeather extends AppCompatActivity implements AdapterView.On
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // 1) 터치 다운 위치의 Y 위치를 기억해 둔다.
+                initialX = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                pointCurX = event.getX();
+                //터치 다운 X 위치에서 300픽셀을 초과 이동되면 애니매이션 실행
+                if (initialX - pointCurX > -300) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    finish();
+                }
+        }
+        return true;
     }
 }
